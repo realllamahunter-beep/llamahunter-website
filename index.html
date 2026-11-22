@@ -1,0 +1,3488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Llama Hunter | Content Creator & Brand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Barlow+Condensed:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07050f;
+    --bg2: #0d0818;
+    --surface: #130d24;
+    --surface2: #1a1133;
+    --gold: #C850F0;
+    --gold2: #7B5FFF;
+    --cyan: #00E8CC;
+    --purple: #FF3FA4;
+    --text: #F2EEFF;
+    --text-muted: #8a7aaa;
+    --border: rgba(200,80,240,0.18);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("removed-image-placeholder viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(5,8,17,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.7rem;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--cyan); -webkit-text-fill-color: var(--cyan); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 36px;
+  }
+
+  nav ul a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  nav ul a:hover { color: var(--gold); }
+
+  .nav-cta {
+    background: linear-gradient(135deg, var(--gold), var(--purple));
+    color: #fff !important;
+    padding: 8px 22px;
+    font-weight: 900 !important;
+    letter-spacing: 1.5px;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: opacity 0.2s !important;
+  }
+  .nav-cta:hover { opacity: 0.85; color: #fff !important; }
+
+  /* ── MOBILE NAV TOGGLE ── */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 200;
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text);
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+
+  .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(320px, 80vw);
+    height: 100vh;
+    background: rgba(5,8,17,0.98);
+    backdrop-filter: blur(20px);
+    border-left: 1px solid var(--border);
+    z-index: 150;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+    padding: 100px 32px 40px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+  }
+
+  .mobile-menu.open { transform: translateX(0); }
+
+  .mobile-menu ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .mobile-menu ul a {
+    color: var(--text);
+    text-decoration: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    transition: color 0.2s;
+  }
+
+  .mobile-menu ul a:hover { color: var(--gold); }
+
+  .mobile-menu-ctas {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .mobile-menu-ctas .nav-cta {
+    text-align: center;
+    padding: 14px 22px;
+    font-size: 0.95rem;
+  }
+
+  .hero-title-img {
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s 0.1s ease both;
+    margin-bottom: 4px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    align-items: center;
+    padding: 120px 64px 80px;
+    position: relative;
+    overflow: hidden;
+    gap: 0 40px;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    grid-column: 1;
+    z-index: 1;
+  }
+
+  .hero-right {
+    grid-column: 2;
+    grid-row: 1 / 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    animation: fadeLeft 1s 0.3s ease both;
+  }
+
+  .hero-video-frame {
+    width: 100%;
+    max-width: 440px;
+    aspect-ratio: 9 / 16;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(200,80,240,0.25);
+    box-shadow:
+      0 0 60px rgba(123,47,255,0.3),
+      0 0 120px rgba(123,47,255,0.15);
+    position: relative;
+  }
+
+  .hero-video-frame video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-video-frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    border: 1px solid rgba(200,80,240,0.3);
+    pointer-events: none;
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+      padding: 120px 24px 60px;
+    }
+    .hero-left { grid-column: 1; }
+    .hero-right {
+      grid-column: 1;
+      grid-row: auto;
+      margin-top: 40px;
+    }
+    .hero-video-frame {
+      max-width: 280px;
+      aspect-ratio: 9 / 16;
+      margin: 0 auto;
+    }
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 80% 50%, rgba(123,47,255,0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 70% at 20% 80%, rgba(0,232,204,0.1) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 60% 20%, rgba(200,80,240,0.12) 0%, transparent 50%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,80,240,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,80,240,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+  }
+
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 20px;
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 14vw, 12rem);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  .hero-title .line1 {
+    display: block;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--purple) 60%, #ff6ec7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-title .line2 {
+    display: block;
+    color: var(--text);
+    -webkit-text-fill-color: var(--text);
+  }
+
+  .hero-sub {
+    margin-top: 28px;
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    max-width: 540px;
+    line-height: 1.7;
+    animation: fadeUp 0.9s 0.2s ease both;
+  }
+
+  .hero-sub strong { color: var(--text); }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+    animation: fadeUp 1s 0.3s ease both;
+  }
+
+  .tag {
+    background: rgba(123,47,255,0.15);
+    border: 1px solid rgba(200,80,240,0.3);
+    color: var(--cyan);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 36px;
+    animation: fadeUp 1s 0.4s ease both;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    text-decoration: none;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: all 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: linear-gradient(135deg, var(--purple), var(--gold)); transform: translateY(-2px); }
+
+  .btn-secondary {
+    border: 1.5px solid rgba(200,80,240,0.4);
+    color: var(--text);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    text-decoration: none;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: all 0.2s;
+    display: inline-block;
+  }
+  .btn-secondary:hover { border-color: var(--cyan); color: var(--cyan); transform: translateY(-2px); }
+
+  .hero-stats {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+    margin-top: 36px;
+    animation: fadeUp 1s 0.5s ease both;
+  }
+
+  .stat-item {
+    text-align: left !important;
+    border-right: none !important;
+    border-left: 2px solid var(--cyan);
+    padding-right: 0 !important;
+    padding-left: 14px;
+  }
+
+  /* stat-item handled above */
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.4rem;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--gold), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    animation: bounce 2s infinite;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--cyan), transparent);
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 100px 48px; position: relative; }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--cyan);
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 1;
+    letter-spacing: 1px;
+  }
+
+  /* ── ABOUT ── */
+  .about {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-text .section-title {
+    background: linear-gradient(135deg, var(--text) 0%, var(--text-muted) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 28px;
+  }
+
+  .about-text p {
+    color: var(--text-muted);
+    line-height: 1.8;
+    font-size: 1.05rem;
+    margin-bottom: 16px;
+  }
+
+  .about-text p strong { color: var(--cyan); font-weight: 700; }
+
+  .about-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .about-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .about-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--purple));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .about-card:hover { border-color: rgba(200,80,240,0.4); transform: translateY(-4px); }
+  .about-card:hover::before { transform: scaleX(1); }
+
+  .about-card .icon {
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+  }
+
+  .about-card h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 8px;
+  }
+
+  .about-card p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* ── SHOWS ── */
+  .shows {
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .shows-header {
+    margin-bottom: 56px;
+  }
+
+  .shows-header .section-title span {
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* ── NETFLIX SHOWS GRID ── */
+  .lv-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 3px;
+  }
+
+  .lv-featured {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+    min-height: 500px;
+  }
+
+  .lv-tile {
+    aspect-ratio: 16 / 9;
+  }
+
+  .lv-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--surface);
+    display: block;
+    text-decoration: none;
+  }
+
+  .lv-card-logo {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    transition: transform 0.4s ease;
+  }
+
+  .lv-card-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .lv-featured .lv-card-logo { padding: 40px; }
+
+  .lv-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(7,5,15,0.97) 0%, rgba(7,5,15,0.7) 45%, rgba(7,5,15,0.15) 100%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 22px 20px 20px;
+    gap: 8px;
+  }
+
+  .lv-featured .lv-overlay {
+    padding: 36px 32px 32px;
+    background: linear-gradient(to top, rgba(7,5,15,0.98) 0%, rgba(7,5,15,0.6) 50%, transparent 100%);
+  }
+
+  .lv-card:hover .lv-overlay { opacity: 1; }
+  .lv-card:hover .lv-card-logo { transform: scale(1.04); }
+
+  .lv-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cyan);
+  }
+
+  .lv-featured .lv-badge { font-size: 0.75rem; }
+
+  .lv-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 1.5px;
+    color: var(--text);
+    line-height: 1;
+    margin: 0;
+  }
+
+  .lv-featured .lv-title { font-size: 2.4rem; }
+
+  .lv-desc {
+    font-size: 0.8rem;
+    color: rgba(242,238,255,0.75);
+    line-height: 1.5;
+    margin: 4px 0 0;
+  }
+
+  .lv-featured .lv-desc { font-size: 0.95rem; max-width: 380px; }
+
+  .lv-watch {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.25s 0.1s ease, transform 0.25s 0.1s ease;
+  }
+
+  .lv-card:hover .lv-watch { opacity: 1; transform: translateY(0); }
+
+  .lv-coming-soon {
+    background: rgba(123,47,255,0.1);
+    border: 1px solid rgba(200,80,240,0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    aspect-ratio: 16 / 9;
+  }
+
+  .lv-coming-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--purple);
+  }
+
+  .lv-coming-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 900px) {
+    .lv-grid { grid-template-columns: 1fr 1fr; }
+    .lv-featured { grid-column: 1 / 3; grid-row: 1 / 2; min-height: 300px; }
+    .lv-tile { aspect-ratio: 16 / 9; }
+  }
+
+  @media (max-width: 600px) {
+    .lv-grid { grid-template-columns: 1fr; }
+    .lv-featured { grid-column: 1; grid-row: 1; min-height: 260px; }
+  }
+
+  /* Row fade-in */
+  .lv-row {
+    display: contents;
+  }
+
+  .lv-row-wrap {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column: 1 / -1;
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .lv-row-wrap.lv-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .show-hashtag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--cyan);
+    margin-bottom: 8px;
+  }
+
+  .show-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.1;
+  }
+
+  .show-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* ── VALUES / BRAND ── */
+  .brand-section {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .brand-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .brand-header { margin-bottom: 56px; }
+
+  .brand-header .section-title { color: var(--text); }
+
+  .brand-header .section-title span {
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* ── BENTO GRID ── */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: 380px 380px auto;
+    gap: 10px;
+  }
+
+  /* Tile base */
+  .bento-tile {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .bento-tile video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* dark gradient overlay on video tiles */
+  .bento-tile-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(7,5,15,0.92) 0%, rgba(7,5,15,0.4) 40%, rgba(7,5,15,0.1) 100%);
+    z-index: 1;
+  }
+
+  .bento-tile-content {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 28px 32px;
+    z-index: 2;
+  }
+
+  .bento-tile-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .bento-tile-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 1px;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+
+  .bento-tile-desc {
+    font-size: 0.85rem;
+    color: rgba(242,238,255,0.75);
+    line-height: 1.6;
+    max-width: 480px;
+  }
+
+  /* video placeholder state */
+  .bento-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(135deg, rgba(123,47,255,0.12), rgba(200,80,240,0.06));
+    z-index: 0;
+  }
+
+  .bento-placeholder-icon {
+    font-size: 2.5rem;
+    opacity: 0.4;
+  }
+
+  .bento-placeholder-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* Tile sizing */
+  /* Row 1: stinger full width */
+  .bento-stinger   { grid-column: 1 / 13; grid-row: 1; }
+
+  /* Row 2: mascot tall left, IRL right */
+  .bento-mascot    { grid-column: 1 / 6;  grid-row: 2; }
+  .bento-irl       { grid-column: 6 / 13; grid-row: 2; }
+
+  /* Row 3: four accent stat tiles */
+  .bento-accent {
+    grid-row: 3;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 180px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .bento-accent:hover {
+    border-color: rgba(200,80,240,0.4);
+    transform: translateY(-3px);
+  }
+
+  .bento-accent-1 { grid-column: 1 / 4; }
+  .bento-accent-2 { grid-column: 4 / 7; }
+  .bento-accent-3 { grid-column: 7 / 10; }
+  .bento-accent-4 { grid-column: 10 / 13; }
+
+  .bento-accent-icon {
+    font-size: 1.6rem;
+    margin-bottom: 16px;
+  }
+
+  .bento-accent-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .bento-accent-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .bento-accent-stat {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    background: linear-gradient(135deg, var(--gold), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 14px;
+    line-height: 1;
+  }
+
+  /* hover reveal on video tiles */
+  .bento-tile-overlay { transition: opacity 0.3s; }
+  .bento-stinger:hover .bento-tile-overlay,
+  .bento-mascot:hover .bento-tile-overlay,
+  .bento-irl:hover .bento-tile-overlay { opacity: 0.7; }
+
+  @media (max-width: 900px) {
+    .bento-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+    }
+    .bento-stinger  { grid-column: 1 / 3; grid-row: 1; min-height: 240px; }
+    .bento-mascot   { grid-column: 1 / 2; grid-row: 2; min-height: 280px; }
+    .bento-irl      { grid-column: 2 / 3; grid-row: 2; min-height: 280px; }
+    .bento-accent-1, .bento-accent-2 { grid-column: span 1; grid-row: 3; }
+    .bento-accent-3, .bento-accent-4 { grid-column: span 1; grid-row: 4; }
+  }
+
+  @media (max-width: 600px) {
+    .bento-grid { grid-template-columns: 1fr; }
+    .bento-stinger, .bento-mascot, .bento-irl { grid-column: 1; min-height: 260px; }
+    .bento-mascot { grid-row: 2; }
+    .bento-irl    { grid-row: 3; }
+    .bento-accent-1, .bento-accent-2, .bento-accent-3, .bento-accent-4 { grid-column: 1; grid-row: auto; }
+  }
+
+  /* ── VITALS / OFF-SCREEN ── */
+  .vitals {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--bg2) 100%);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .vitals-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .vitals-header .section-title {
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  .vitals-header .section-title span {
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .vitals-header p {
+    color: var(--text-muted);
+    line-height: 1.8;
+    font-size: 0.95rem;
+    margin-bottom: 32px;
+  }
+
+  /* stat cards grid */
+  .vitals-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .vitals-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 18px;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vitals-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--cyan), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .vitals-card:hover { border-color: rgba(0,232,204,0.35); transform: translateY(-2px); }
+  .vitals-card:hover::before { opacity: 1; }
+
+  .vitals-card-icon { font-size: 1.4rem; margin-bottom: 10px; }
+
+  .vitals-card-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .vitals-card-desc {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .vitals-card-stat {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    background: linear-gradient(135deg, var(--cyan), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 8px;
+  }
+
+  /* creator code side */
+  .creator-code-side { display: flex; flex-direction: column; gap: 28px; }
+
+  .creator-code-block {
+    text-align: center;
+    padding: 40px 32px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .creator-code-block::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(200,80,240,0.15) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 50% 0%, rgba(255,180,0,0.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .creator-code-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 12px;
+  }
+
+  .creator-code-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    letter-spacing: 4px;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--gold) 0%, #ffcc44 40%, var(--purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 30px rgba(255,180,0,0.3));
+    animation: codePulse 3s ease-in-out infinite;
+    margin-bottom: 20px;
+  }
+
+  @keyframes codePulse {
+    0%, 100% { filter: drop-shadow(0 0 20px rgba(255,180,0,0.2)); }
+    50%       { filter: drop-shadow(0 0 50px rgba(255,180,0,0.5)) drop-shadow(0 0 80px rgba(200,80,240,0.3)); }
+  }
+
+  .creator-code-sub {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .copy-code-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    color: #000;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    border: none;
+    cursor: pointer;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .copy-code-btn:hover { opacity: 0.85; transform: translateY(-2px); }
+
+  .mission-block {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .mission-block img {
+    width: 100%;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .mission-block:hover img { transform: scale(1.02); }
+
+  .mission-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 16px 20px;
+    background: linear-gradient(to top, rgba(7,5,15,0.95), transparent);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cyan);
+  }
+
+  @media (max-width: 900px) {
+    .vitals-inner { grid-template-columns: 1fr; gap: 48px; }
+    .vitals-cards { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 500px) {
+    .vitals-cards { grid-template-columns: 1fr; }
+  }
+
+  /* ── CONNECT / CTA ── */
+  .connect {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .connect .section-label { justify-content: center; }
+  .connect .section-label::before { display: none; }
+
+  .connect .section-title {
+    font-size: clamp(3rem, 8vw, 6rem);
+    margin-bottom: 24px;
+  }
+
+  .connect .section-title span {
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .connect p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    max-width: 560px;
+    margin: 0 auto 40px;
+  }
+
+  .social-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 48px;
+  }
+
+  .social-link {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    text-decoration: none;
+    transition: all 0.2s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+
+  .social-link:hover {
+    background: var(--surface2);
+    border-color: rgba(200,80,240,0.6);
+    color: var(--gold);
+  }
+
+  /* ── PARTNERS ── */
+  .partners {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 56px 48px;
+    text-align: center;
+  }
+
+  .partners-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+  }
+
+  .partners-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 32px 56px;
+    align-items: center;
+  }
+
+  .partner-logo { display: flex; align-items: center; }
+
+  .partner-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    color: rgba(240,244,255,0.3);
+    transition: color 0.2s;
+  }
+
+  .partner-name:hover { color: var(--cyan); }
+
+  /* ── SPONSORS ── */
+  .sponsors {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+  }
+
+  .sponsors-header { text-align: center; max-width: 700px; margin: 0 auto 56px; }
+  .sponsors-header .section-label { justify-content: center; }
+  .sponsors-header .section-label::before { display: none; }
+  .sponsors-header .section-title span {
+    background: linear-gradient(135deg, var(--gold), var(--cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .sponsors-header p { color: var(--text-muted); margin-top: 18px; font-size: 1.02rem; }
+
+  .sponsors-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+  }
+
+  .sponsor-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: visible;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+
+  .sponsor-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: 8px 8px 0 0;
+    background: linear-gradient(90deg, var(--gold), var(--cyan));
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .sponsor-card:hover { border-color: rgba(0,232,204,0.4); transform: translateY(-4px); }
+  .sponsor-card:hover::before { opacity: 1; }
+
+  .sponsor-card.is-clickable { cursor: pointer; }
+
+  /* ── SPEECH-BUBBLE CALLOUT ── */
+  .sponsor-bubble {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translate(-50%, 8px) scale(0.7);
+    background: linear-gradient(135deg, var(--gold), var(--cyan));
+    color: #0a0714;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 0.74rem;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+    padding: 8px 16px;
+    border-radius: 20px;
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    z-index: 6;
+    transition: opacity 0.25s ease, transform 0.4s cubic-bezier(.34,1.56,.64,1);
+  }
+
+  .sponsor-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0; height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid var(--cyan);
+  }
+
+  .sponsor-bubble.show {
+    opacity: 1;
+    transform: translate(-50%, -10px) scale(1);
+    animation: bubbleWiggle 1.8s ease-in-out 0.4s 1;
+  }
+
+  @keyframes bubbleWiggle {
+    0%, 100% { transform: translate(-50%, -10px) scale(1) rotate(0deg); }
+    25%      { transform: translate(-50%, -10px) scale(1) rotate(-2deg); }
+    75%      { transform: translate(-50%, -10px) scale(1) rotate(2deg); }
+  }
+
+  /* ── COPYABLE CODE ── */
+  .sponsor-code {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--cyan);
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    border-bottom: 1px dashed rgba(0,232,204,0.5);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .sponsor-code:hover { color: var(--gold); border-color: rgba(200,80,240,0.5); }
+  .sponsor-code .copy-icon { font-size: 0.8em; }
+
+  .community-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .sponsor-banner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    position: relative;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+
+  .sponsor-banner:hover { border-color: rgba(0,232,204,0.4); transform: translateY(-2px); }
+
+  .sponsor-banner-logo {
+    flex-shrink: 0;
+    width: 130px;
+    height: 130px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sponsor-banner-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .sponsor-banner-content { text-align: left; flex: 1; }
+  .sponsor-banner-content .sponsor-name { margin-bottom: 6px; }
+  .sponsor-banner-content .sponsor-tag { margin-bottom: 12px; }
+  .sponsor-banner-content .sponsor-desc { margin-bottom: 14px; }
+  .sponsor-banner-content .sponsor-story-note { border-top: none; padding-top: 0; margin-top: 0; }
+
+  @media (max-width: 700px) {
+    .sponsor-banner { flex-direction: column; text-align: center; padding: 28px 22px; }
+    .sponsor-banner-content { text-align: center; }
+  }
+
+  .sponsor-logo-frame {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+  }
+
+  .sponsor-logo-frame img {
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .sponsor-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .sponsor-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 14px;
+  }
+
+  .sponsor-desc {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--text-muted);
+    margin-bottom: 22px;
+    flex-grow: 1;
+  }
+
+  .sponsor-link {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    border: 1.5px solid rgba(200,80,240,0.4);
+    padding: 9px 22px;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: all 0.2s;
+  }
+
+  .sponsor-link:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  /* Inactive / coming-soon sponsor card */
+  .sponsor-card.is-locked {
+    border-style: dashed;
+    border-color: rgba(138,122,170,0.35);
+    background: repeating-linear-gradient(135deg, var(--surface), var(--surface) 10px, rgba(255,255,255,0.015) 10px, rgba(255,255,255,0.015) 20px);
+  }
+  .sponsor-card.is-locked:hover { transform: none; border-color: rgba(138,122,170,0.5); }
+  .sponsor-card.is-locked:hover::before { opacity: 0; }
+  .sponsor-card.is-locked .sponsor-logo-frame img { filter: grayscale(1); opacity: 0.6; }
+  .sponsor-card.is-locked .sponsor-name { color: var(--text-muted); }
+
+  .sponsor-status-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .sponsor-story-note {
+    font-size: 0.78rem;
+    font-style: italic;
+    color: var(--text-muted);
+    opacity: 0.7;
+    border-top: 1px dashed var(--border);
+    padding-top: 14px;
+    margin-top: auto;
+  }
+
+  @media (max-width: 1100px) {
+    .sponsors-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .sponsors-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── MERCH BANNER ── */
+  .merch-section {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 40px 20px;
+  }
+
+  .merch-banner-link {
+    display: block;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .merch-banner-link img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .merch-banner-link:hover {
+    transform: scale(1.01);
+    box-shadow: 0 12px 40px rgba(123,47,255,0.25);
+  }
+
+  @media (max-width: 900px) {
+    .merch-section { padding: 0 20px 20px; }
+  }
+
+  /* ── WEEKLY SCHEDULE ── */
+  .sched{max-width:1100px;margin:0 auto;padding:80px 32px 40px}
+  .sched-head{text-align:center;max-width:620px;margin:0 auto 44px}
+  .sched-head .section-label{justify-content:center}
+  .sched-head .section-label::before{display:none}
+  .sched-head .section-title span{background:linear-gradient(135deg,var(--gold),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .sched-head p{color:var(--text-muted);margin-top:16px;font-size:1rem}
+  .sched-frame{display:block;position:relative;max-width:860px;margin:0 auto;padding:10px;border-radius:18px;background:linear-gradient(145deg,rgba(200,80,240,.35),rgba(0,232,204,.25) 60%,rgba(255,255,255,.06));box-shadow:0 30px 80px rgba(0,0,0,.45),0 0 70px rgba(200,80,240,.15);transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .5s}
+  .sched-frame img{display:block;width:100%;height:auto;border-radius:10px}
+  .sched-frame:hover{transform:translateY(-6px) scale(1.012);box-shadow:0 40px 100px rgba(0,0,0,.55),0 0 90px rgba(0,232,204,.2)}
+  @media(max-width:700px){.sched{padding:56px 16px 24px}}
+
+  .section-title + p{margin-top:18px}
+
+  /* ── VOID ESPORTS ── */
+  .void-feature{display:flex;align-items:center;gap:32px;max-width:1200px;margin:28px auto 0;padding:28px 34px;background:var(--surface);border:1px solid var(--border);border-radius:8px;text-decoration:none;position:relative;transition:border-color .25s,transform .25s}
+  .void-feature:hover{border-color:rgba(0,232,204,.45);transform:translateY(-3px)}
+  .void-feature-logo{flex-shrink:0;width:150px;height:150px;display:flex;align-items:center;justify-content:center}
+  .void-feature-logo img{max-width:100%;max-height:100%;object-fit:contain}
+  .void-feature-body{text-align:left}
+  .void-feature-body .sponsor-name{margin-bottom:6px}
+  .void-feature-body .sponsor-desc{margin-bottom:14px;max-width:760px}
+  .void-footer{text-align:center;padding:48px 24px 8px;border-top:1px solid var(--border)}
+  .void-footer img{height:70px;width:auto;opacity:.75;transition:opacity .25s,transform .25s}
+  .void-footer a:hover img{opacity:1;transform:scale(1.06)}
+  @media(max-width:700px){.void-feature{flex-direction:column;text-align:center}.void-feature-body{text-align:center}}
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .footer-copy {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  .footer-code {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 8px 18px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--gold);
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeLeft {
+    from { opacity: 0; transform: translateX(28px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-8px); }
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--cyan), transparent);
+    opacity: 0.2;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    nav ul { display: none; }
+    .nav-toggle { display: flex; }
+    .hero { padding: 120px 24px 80px; }
+    .hero-stats { display: none; }
+    section { padding: 80px 24px; }
+    .about-inner { grid-template-columns: 1fr; gap: 48px; }
+    .brand-features { grid-template-columns: 1fr; gap: 24px; }
+    .vitals-inner { grid-template-columns: 1fr; gap: 48px; }
+    footer { padding: 32px 24px; flex-direction: column; text-align: center; }
+    .partners { padding: 48px 24px; }
+  }
+
+  @media (min-width: 901px) {
+    .nav-toggle { display: none; }
+    .mobile-menu { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .about-cards { grid-template-columns: 1fr; }
+    .shows-grid { grid-template-columns: 1fr 1fr; }
+    .hero-actions { flex-direction: column; }
+  }
+
+  /* ── SCROLL FADE-IN ── */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Show logo cards */
+  .show-logo {
+    width:100%; height:120px; display:flex; align-items:center;
+    justify-content:center; margin-bottom:10px; overflow:hidden;
+    background: rgba(0,0,0,0.15); border-radius:4px;
+  }
+  .show-logo img {
+    width:100%; height:100%; object-fit:contain;
+    padding:8px;
+    transition: transform 0.3s ease;
+  }
+  .show-card:hover .show-logo img { transform: scale(1.07); }
+  .show-card[onclick] { cursor:pointer; }
+
+  /* Scroll fade-in */
+  .fade-in-up {
+    opacity:0; transform:translateY(36px);
+    transition: opacity 0.75s ease, transform 0.75s ease;
+  }
+  .fade-in-up.visible { opacity:1; transform:translateY(0); }
+
+  /* ── MERCH STORE ── */
+  #merch { max-width: 1300px; margin: 0 auto; }
+
+  .merch-header { margin-bottom: 56px; }
+
+  .merch-header .section-title span {
+    background: linear-gradient(135deg, var(--gold), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .merch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+
+  .merch-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    cursor: pointer;
+  }
+
+  .merch-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(200,80,240,0.5);
+    box-shadow: 0 16px 40px rgba(123,47,255,0.2);
+  }
+
+  .merch-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--purple), var(--cyan));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s;
+  }
+  .merch-card:hover::before { transform: scaleX(1); }
+
+  .merch-img-wrap {
+    width: 100%;
+    aspect-ratio: 1/1;
+    background: var(--surface2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .merch-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+  }
+
+  .merch-card:hover .merch-img-wrap img {
+    transform: scale(1.04);
+  }
+
+  .merch-img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--surface2) 0%, rgba(123,47,255,0.12) 100%);
+    color: var(--text-muted);
+    gap: 12px;
+  }
+
+  .merch-img-placeholder .placeholder-icon {
+    font-size: 3rem;
+    opacity: 0.4;
+  }
+
+  .merch-img-placeholder .placeholder-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.4;
+  }
+
+  .merch-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+  }
+
+  .merch-info {
+    padding: 20px 20px 22px;
+  }
+
+  .merch-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.1;
+  }
+
+  .merch-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .merch-price-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .merch-price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, var(--cyan), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .merch-btn {
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    color: #fff;
+    border: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    cursor: pointer;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .merch-btn:hover {
+    background: linear-gradient(135deg, var(--purple), var(--gold));
+    transform: translateY(-1px);
+  }
+
+  .merch-sold-out .merch-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .merch-cta-bar {
+    text-align: center;
+    padding: 40px 0 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .merch-cta-bar p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+
+  /* Admin hint */
+  .merch-admin-hint {
+    background: rgba(0,232,204,0.06);
+    border: 1px dashed rgba(0,232,204,0.3);
+    padding: 20px 24px;
+    margin-bottom: 32px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    display: none; /* hidden by default, enable for editing */
+  }
+
+  /* ── DONATE ── */
+  .btn-donate {
+    background: linear-gradient(135deg, #FF3FA4, #C850F0, #7B5FFF);
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 22px;
+    text-decoration: none;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: all 0.2s;
+    display: inline-block;
+    animation: donatePulse 2.5s ease-in-out infinite;
+  }
+  .btn-donate:hover { opacity: 0.88; transform: translateY(-2px); }
+  @keyframes donatePulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(200,80,240,0); }
+    50%       { box-shadow: 0 0 18px 6px rgba(200,80,240,0.45); }
+  }
+
+  /* ── BROADCAST SCHEDULE SECTION ── */
+  .broadcast-section {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 80px 48px;
+  }
+  .broadcast-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 56px;
+    align-items: center;
+  }
+  .broadcast-schedule-img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 0 40px rgba(200,80,240,0.3), 0 0 80px rgba(0,232,204,0.1);
+    border: 1px solid rgba(200,80,240,0.25);
+    transition: transform 0.3s;
+  }
+  .broadcast-schedule-img:hover { transform: scale(1.01); }
+  .broadcast-donate-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+  .broadcast-donate-panel img {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--gold);
+    box-shadow: 0 0 30px rgba(200,80,240,0.4);
+  }
+  .broadcast-donate-panel h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, var(--gold), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .broadcast-donate-panel p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    max-width: 300px;
+  }
+  @media (max-width: 900px) {
+    .broadcast-inner { grid-template-columns: 1fr; }
+    .broadcast-schedule-img { max-width: 600px; margin: 0 auto; display: block; }
+  }
+
+  /* ── LIVE PLAYER (beside broadcast schedule) ── */
+  .broadcast-inner-live {
+    grid-template-columns: 1fr 1fr 380px;
+  }
+  .broadcast-live-wrap {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    aspect-ratio: 9 / 16;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 40px rgba(200,80,240,0.3), 0 0 80px rgba(0,232,204,0.1);
+    border: 1px solid rgba(200,80,240,0.25);
+  }
+  .broadcast-live-wrap iframe {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: 0;
+  }
+  @media (max-width: 1100px) {
+    .broadcast-inner-live { grid-template-columns: 1fr; }
+    .broadcast-live-wrap { max-width: 600px; margin: 0 auto; }
+  }
+
+  /* ── YOUTUBE FEED ── */
+  .yt-feed-section {
+    padding: 80px 48px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+  .yt-feed-header { margin-bottom: 32px; }
+  .yt-feed-scroll-wrap {
+    position: relative;
+    overflow: hidden;
+  }
+  .yt-feed-scroll-wrap::before,
+  .yt-feed-scroll-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 60px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .yt-feed-scroll-wrap::before {
+    left: 0;
+    background: linear-gradient(to right, var(--bg), transparent);
+  }
+  .yt-feed-scroll-wrap::after {
+    right: 0;
+    background: linear-gradient(to left, var(--bg), transparent);
+  }
+  .yt-feed-track {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) var(--surface);
+    padding: 4px 8px 12px;
+  }
+  .yt-feed-track::-webkit-scrollbar { height: 4px; }
+  .yt-feed-track::-webkit-scrollbar-track { background: var(--surface); border-radius: 2px; }
+  .yt-feed-track::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+  .yt-card {
+    flex: 0 0 280px;
+    scroll-snap-align: start;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+  }
+  .yt-card:hover { transform: translateY(-4px); border-color: rgba(200,80,240,0.5); }
+  .yt-thumb-wrap {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    background: var(--surface2);
+    overflow: hidden;
+  }
+  .yt-thumb-wrap img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .yt-play-icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.25);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .yt-card:hover .yt-play-icon { opacity: 1; }
+  .yt-play-icon svg { width: 48px; height: 48px; }
+  .yt-card-info { padding: 12px 14px 14px; }
+  .yt-card-title {
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .yt-card-date {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+  .yt-feed-loading {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    padding: 20px;
+    text-align: center;
+  }
+  .yt-view-all {
+    text-align: center;
+    margin-top: 24px;
+  }
+
+  /* ── YT EXPERIENCES GRID (TeamPWR-style) ── */
+  .yt-experiences-section {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 0;
+  }
+  .yt-exp-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 80px 48px;
+  }
+  .yt-exp-header {
+    margin-bottom: 48px;
+  }
+  .yt-exp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 2px;
+  }
+  /* Featured card spans 2 rows and 1 col on the left */
+  .yt-exp-card {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    text-decoration: none;
+    background: var(--surface);
+    aspect-ratio: 16/9;
+  }
+  .yt-exp-featured {
+    grid-row: span 2;
+    aspect-ratio: unset;
+    min-height: 400px;
+  }
+  .yt-exp-thumb {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  .yt-exp-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .yt-exp-card:hover .yt-exp-thumb img { transform: scale(1.05); }
+  .yt-exp-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0);
+    transition: background 0.3s;
+  }
+  .yt-exp-card:hover .yt-exp-play { background: rgba(0,0,0,0.35); }
+  .yt-exp-play svg { width: 52px; height: 52px; opacity: 0; transition: opacity 0.3s; }
+  .yt-exp-card:hover .yt-exp-play svg { opacity: 1; }
+  .yt-exp-info {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 20px 20px 16px;
+    background: linear-gradient(to top, rgba(7,5,15,0.96) 0%, rgba(7,5,15,0.7) 60%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .yt-exp-date {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+  }
+  .yt-exp-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+    color: var(--text);
+    line-height: 1.2;
+    margin: 0;
+  }
+  .yt-exp-featured .yt-exp-title { font-size: 1.9rem; }
+  .yt-exp-cta {
+    font-size: 0.72rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 6px;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .yt-exp-card:hover .yt-exp-cta { opacity: 1; transform: translateY(0); }
+  .yt-exp-loading {
+    color: var(--text-muted);
+    padding: 40px;
+    text-align: center;
+    grid-column: 1 / -1;
+  }
+  @media (max-width: 900px) {
+    .yt-exp-grid { grid-template-columns: 1fr 1fr; }
+    .yt-exp-featured { grid-row: span 1; min-height: unset; aspect-ratio: 16/9; }
+  }
+  @media (max-width: 600px) {
+    .yt-exp-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── JOURNEY TIMELINE ── */
+  .journey-section {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 80px 48px;
+  }
+  .journey-inner { max-width: 900px; margin: 0 auto; }
+  .journey-header { margin-bottom: 56px; }
+  .journey-line {
+    position: relative;
+    padding-left: 56px;
+  }
+  .journey-line::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--gold) 0%, var(--cyan) 60%, var(--border) 100%);
+  }
+  .journey-item {
+    position: relative;
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .journey-item.j-visible { opacity: 1; transform: translateX(0); }
+  .journey-item:last-child { margin-bottom: 0; }
+  .journey-dot {
+    position: absolute;
+    left: -46px;
+    top: 6px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 3px solid var(--bg2);
+    box-shadow: 0 0 10px rgba(200,80,240,0.6);
+    z-index: 1;
+  }
+  .journey-item.future .journey-dot {
+    background: var(--surface2);
+    box-shadow: none;
+    border-color: var(--border);
+  }
+  .journey-date {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 6px;
+  }
+  .journey-item.future .journey-date { color: var(--text-muted); }
+  .journey-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.45rem;
+    letter-spacing: 1.5px;
+    color: var(--text);
+    margin: 0 0 6px;
+    line-height: 1.1;
+  }
+  .journey-item.future .journey-title { color: var(--text-muted); }
+  .journey-desc {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    max-width: 580px;
+  }
+  .journey-item.future .journey-desc { opacity: 0.5; font-style: italic; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+
+<div id="coming-soon-overlay" style="display:none;position:fixed;inset:0;z-index:9998;background:var(--bg);flex-direction:column;align-items:center;justify-content:center;text-align:center;">
+  <div style="font-size:clamp(4rem,12vw,9rem);line-height:1;filter:drop-shadow(0 0 30px rgba(0,232,204,0.6)) drop-shadow(0 0 60px rgba(200,80,240,0.4));">👀</div>
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,6rem);color:var(--text);letter-spacing:4px;margin-top:16px;">COMING SOON</div>
+  <p style="color:var(--text-muted);font-size:1.1rem;margin-top:16px;max-width:400px;">Something big is llaunching. Stay tuned to the Llama-verse.</p>
+  <button onclick="document.getElementById('coming-soon-overlay').style.display='none'" style="margin-top:32px;background:linear-gradient(135deg,var(--gold),var(--purple));color:#fff;border:none;padding:14px 36px;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;cursor:pointer;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);">← Back</button>
+</div>
+<div id="coming-soon-overlay" style="display:none;position:fixed;inset:0;z-index:9998;background:var(--bg);flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;">
+  <div style="font-size:5rem;line-height:1;">👀</div>
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,6rem);letter-spacing:4px;margin-top:16px;background:linear-gradient(135deg,var(--gold),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">COMING SOON</div>
+  <p style="color:var(--text-muted);font-size:1.1rem;margin-top:16px;max-width:420px;line-height:1.7;">Something big is llaunching soon. Stay tuned to the Llama-verse.</p>
+  <button onclick="document.getElementById('coming-soon-overlay').style.display='none'" style="margin-top:32px;background:linear-gradient(135deg,var(--gold),var(--purple));color:#fff;border:none;padding:14px 40px;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;cursor:pointer;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);">← Back</button>
+</div>
+<nav>
+  <a href="#" class="nav-logo-img"><img src="Llama_Hunter_Website_LOGO.png" alt="Llama Hunter" style="height:52px;width:auto;filter:drop-shadow(0 0 8px rgba(123,47,255,0.7));"></a>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#shows">Shows</a></li>
+    <li><a href="#sponsors">Sponsors</a></li>
+    <li><a href="https://llama-hunter-shop.fourthwall.com/" target="_blank">Merch</a></li>
+    <li><a href="#connect">Connect</a></li>
+    <li><a href="https://forms.gle/UZrt4kiZKFWYjVZn7" target="_blank" class="nav-cta">Work Together</a></li>
+      <li><a href="https://cutt.ly/DONATE2LLAMA" target="_blank" class="nav-cta" style="background:linear-gradient(135deg,#00E8CC,#00B5A0);margin-left:0;color:#000;">💜 Donate</a></li>
+      <li><a href="https://discord.gg/5fM472BjV7" target="_blank" class="nav-cta" style="background:linear-gradient(135deg,var(--cyan),var(--gold2));margin-left:4px;">Join the Herd</a></li>
+  </ul>
+  <button id="navToggle" class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mobileMenu" class="mobile-menu">
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#shows">Shows</a></li>
+    <li><a href="#sponsors">Sponsors</a></li>
+    <li><a href="https://llama-hunter-shop.fourthwall.com/" target="_blank">Merch</a></li>
+    <li><a href="#connect">Connect</a></li>
+  </ul>
+  <div class="mobile-menu-ctas">
+    <a href="https://forms.gle/UZrt4kiZKFWYjVZn7" target="_blank" class="nav-cta">Work Together</a>
+    <a href="https://cutt.ly/DONATE2LLAMA" target="_blank" class="nav-cta" style="background:linear-gradient(135deg,#00E8CC,#00B5A0);color:#000;">💜 Donate</a>
+    <a href="https://discord.gg/5fM472BjV7" target="_blank" class="nav-cta" style="background:linear-gradient(135deg,var(--cyan),var(--gold2));">Join the Herd</a>
+  </div>
+</div>
+<script>
+(function(){
+  var toggle = document.getElementById('navToggle');
+  var menu = document.getElementById('mobileMenu');
+  function closeMenu(){
+    menu.classList.remove('open');
+    toggle.classList.remove('open');
+    toggle.setAttribute('aria-expanded','false');
+    document.body.style.overflow = '';
+  }
+  function openMenu(){
+    menu.classList.add('open');
+    toggle.classList.add('open');
+    toggle.setAttribute('aria-expanded','true');
+    document.body.style.overflow = 'hidden';
+  }
+  toggle.addEventListener('click', function(){
+    if (menu.classList.contains('open')) { closeMenu(); } else { openMenu(); }
+  });
+  menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeMenu);
+  });
+  window.addEventListener('resize', function(){
+    if (window.innerWidth > 900) closeMenu();
+  });
+})();
+</script>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <!-- LEFT: logo + content -->
+  <div class="hero-left">
+    <div class="hero-eyebrow">🦙 Niagara Falls, Canada · OG Epic Partner Since 2019</div>
+
+    <div class="hero-title-img">
+      <img src="Llama_Hunter_Website_LOGO.png" alt="Llama Hunter"
+        style="max-width:min(660px,100%);width:100%;filter:drop-shadow(0 0 40px rgba(123,47,255,0.6)) drop-shadow(0 0 80px rgba(200,80,240,0.3));">
+    </div>
+
+    <p class="hero-sub">
+      Not just a creator. <strong>A full-blown brand.</strong>
+      Building the llama-verse since age 8 — one near-daily upload, one Open House Party, one epic moment at a time.
+    </p>
+
+    <div class="hero-tags">
+      <a href="https://cutt.ly/LLOCKER" target="_blank" class="tag" style="text-decoration:none;">Top 0.1% Llocker</a>
+      <a href="https://www.youtube.com/@RealLlamaHunter" target="_blank" class="tag" style="text-decoration:none;">Daily Content</a>
+      <a href="https://www.fortnite.com/@LlamaHunter" target="_blank" class="tag" style="text-decoration:none;">OG SAC Code</a>
+      <a href="https://www.fortnite.com/@LlamaHunter" target="_blank" class="tag" style="text-decoration:none;">Epic Partner</a>
+      <a href="https://x.com/RealLlamaHunter" target="_blank" class="tag" style="text-decoration:none;">1000+ Videos</a>
+    </div>
+
+    <div class="hero-actions">
+      <a href="https://youtube.com/@RealLlamaHunter" target="_blank" class="btn-primary">Watch Now</a>
+      <a href="https://forms.gle/UZrt4kiZKFWYjVZn7" target="_blank" class="btn-secondary">Brand Inquiries</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">1000+</div>
+        <div class="stat-label">Videos</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">8+ YRS</div>
+        <div class="stat-label">Daily Grind</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">Top 0.1%</div>
+        <div class="stat-label">Fortnite Llocker</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: video placeholder -->
+  <div class="hero-right">
+    <div class="hero-video-frame">
+      <video src="Website_Hype_Video.mp4" autoplay loop muted playsinline></video>
+    </div>
+  </div>
+
+  <div class="scroll-hint">scroll</div>
+</section>
+
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div style="max-width:1200px;margin:0 auto;">
+
+    <!-- Header -->
+    <div style="margin-bottom:64px;">
+      <div class="section-label">Origin Story</div>
+      <h2 class="section-title">Grew up on camera</h2>
+    </div>
+
+    <!-- Lightbox Modal (shared) -->
+    <div id="about-lightbox" onclick="this.style.display='none'" style="display:none;position:fixed;inset:0;z-index:9998;
+      background:rgba(0,0,0,0.92);align-items:center;justify-content:center;cursor:zoom-out;backdrop-filter:blur(6px);">
+      <img id="about-lightbox-img" src="" alt="Expanded image"
+        style="max-width:90vw;max-height:90vh;object-fit:contain;mix-blend-mode:screen;
+        filter:drop-shadow(0 0 40px rgba(200,80,240,0.4));">
+      <div style="position:absolute;top:24px;right:32px;color:white;font-size:2rem;line-height:1;opacity:0.6;">✕</div>
+    </div>
+
+    <!-- Row 1: Text left, Image right -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-bottom:64px;">
+      <div class="about-text">
+        <p>Llama Hunter is a <strong>16-year-old content creator</strong> from Niagara Falls, Canada who has been building in the gaming space for half his life.</p>
+        <p style="color:var(--cyan);font-style:italic;font-size:1.05rem;line-height:1.6;border-left:2px solid var(--cyan);padding-left:16px;margin:20px 0;">That sentence sounds like it shouldn't be real—but it is.</p>
+        <p>He didn't start with a studio, a budget, or industry connections. He started with birthday money and a <strong>used PS4</strong> that had already lived a full life before it became part of his story.</p>
+        <p>But the real beginning isn't the setup—it's the moment he said he wanted to be a streamer. And his dad said yes.</p>
+        <p>Not as a spectator, but as a <strong>partner in the process</strong>. Learning the tools. Figuring out livestreams. Sitting through early struggles. Helping him press "go live" for the first time. Building patience in a world that wasn't watching yet.</p>
+      </div>
+      <div>
+        <img src="YOUNG_LLAMA_PICS_BIO.png" alt="Young Llama Hunter"
+          onclick="document.getElementById('about-lightbox-img').src=this.src;document.getElementById('about-lightbox').style.display='flex'"
+          style="width:100%;max-width:360px;display:block;margin:0 auto;cursor:zoom-in;
+          filter:drop-shadow(0 0 30px rgba(200,80,240,0.25));mix-blend-mode:screen;
+          transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+      </div>
+    </div>
+
+    <!-- Row 2: Image left, Text right -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-bottom:64px;">
+      <div>
+        <img src="FUN_FACT_BIO.png" alt="Llama Hunter fast facts"
+          onclick="document.getElementById('about-lightbox-img').src=this.src;document.getElementById('about-lightbox').style.display='flex'"
+          style="width:100%;max-width:560px;max-height:320px;object-fit:contain;object-position:center bottom;display:block;margin:0 auto;cursor:zoom-in;
+          filter:drop-shadow(0 0 30px rgba(200,80,240,0.25));mix-blend-mode:screen;
+          transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+      </div>
+      <div class="about-text">
+        <p>There was no instant audience. No algorithmic breakthrough. Just <strong>consistency</strong>—years of showing up, improving, and uploading when almost nobody was there to see it.</p>
+        <p>That consistency turned into momentum.</p>
+        <p>By 2019, he had already earned an <strong>OG Support-A-Creator code</strong>, becoming one of the earliest creators in the program—an early signal of what was coming next.</p>
+      </div>
+    </div>
+
+    <!-- Row 3: Text left, Image right -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-bottom:64px;">
+      <div class="about-text">
+        <p>Today, Llama Hunter has created <strong>nearly 2,000 videos</strong>, built original shows and content formats, achieved a <strong>top 0.01% locker</strong>, and even brought his in-game identity into the real world through a <strong style="color:var(--cyan);-webkit-text-fill-color:var(--cyan);">custom mascot</strong>.</p>
+        <p>But the numbers are only part of it.</p>
+        <p>He's still learning. Still refining. Still pushing the edge of what a young creator can build in a constantly changing industry.</p>
+        <p>And now, after years of quiet consistency, the trajectory is shifting.</p>
+        <p style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:1px;background:linear-gradient(135deg,var(--gold),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.3;margin-top:8px;">Because this isn't the peak of the story.<br>It's the beginning of the next level.</p>
+      </div>
+      <div>
+        <img src="MAQSCOT_LLAMA_PICS_BIO.png" alt="Llama Hunter mascot with fans at events"
+          onclick="document.getElementById('about-lightbox-img').src=this.src;document.getElementById('about-lightbox').style.display='flex'"
+          style="width:100%;max-width:360px;display:block;margin:0 auto;cursor:zoom-in;
+          filter:drop-shadow(0 0 30px rgba(200,80,240,0.25));mix-blend-mode:screen;
+          transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+      </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="about-cards">
+      <div class="about-card" style="cursor:pointer;" onclick="window.open('https://www.fortnite.com/@LlamaHunter','_blank')">
+        <div class="icon">🎮</div>
+        <h4>OG Epic Partner</h4>
+        <p>Code LLAMAHUNTER active since Feb 2019 — placing him in the top 1% of longest-running SAC partners globally.</p>
+      </div>
+      <div class="about-card">
+        <div class="icon">🦙</div>
+        <h4>IRL Mascot</h4>
+        <p>The only creator with a custom IRL mascot. Shows up at FNCS majors, street challenges & livestreams.</p>
+      </div>
+      <div class="about-card" style="cursor:pointer;" onclick="window.open('https://cutt.ly/LLOCKER','_blank')">
+        <div class="icon">📦</div>
+        <h4>LLiving LLocker</h4>
+        <p>A top 0.1% inventory — a living archive of Fortnite events, FNCS skins, and exclusives no V-Bucks can recreate.</p>
+      </div>
+      <div class="about-card" style="cursor:pointer;" onclick="document.getElementById('shows').scrollIntoView({behavior:'smooth'})">
+        <div class="icon">🎬</div>
+        <h4>Mini TV Network</h4>
+        <p>14+ original shows. Each with its own identity, cadence, and purpose. Built like a brand, not a channel.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MERCH -->
+<section id="merch" class="merch-section">
+  <a href="https://llama-hunter-shop.fourthwall.com/" target="_blank" class="merch-banner-link" aria-label="Shop the Llama Hunter merch collection">
+    <img src="Merch_Banner_Website.png" alt="Shop the new Llama Hunter merch collection">
+  </a>
+</section>
+
+<section id="schedule" class="sched">
+  <div class="sched-head">
+    <div class="section-label">Weekly Lineup</div>
+    <h2 class="section-title">This Week's <span>Schedule</span></h2>
+    <p>Every Open House Party show, day by day. Tap the schedule to view it full size.</p>
+  </div>
+  <a class="sched-frame" href="The_Open_House_Party_Broadcast_Schedule_WEEK_OF_MAY_18__2026.png" target="_blank" aria-label="View the Open House Party broadcast schedule full size">
+    <img src="The_Open_House_Party_Broadcast_Schedule_WEEK_OF_MAY_18__2026.png" alt="Open House Party Live Broadcast Schedule">
+  </a>
+</section>
+
+<section class="broadcast-section">
+  <div class="section-label" style="max-width:1100px;margin:0 auto 24px;">This Week's Content</div>
+  <div class="broadcast-inner">
+    <div>
+      <img src="Content_Schedule_WEEK_OF_AUG_24.png" alt="Content Schedule Week of Aug 24" class="broadcast-schedule-img">
+    </div>
+    <div class="broadcast-donate-panel">
+      <div style="width:200px;height:200px;border-radius:50%;overflow:hidden;border:3px solid var(--gold);box-shadow:0 0 30px rgba(200,80,240,0.4);flex-shrink:0;">
+        <video src="Very_Happy_Llama_Hunter_GIF-1.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+      </div>
+      <h3>Support the Llama-verse</h3>
+      <p>Every donation directly supports LLama Hunter's daily grind — the llocker, the streams, the shows, the community.</p>
+      <a href="https://cutt.ly/DONATE2LLAMA" target="_blank" class="btn-donate" style="font-size:1rem;padding:14px 36px;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);">
+        💜 Donate
+      </a>
+      <p style="font-size:0.75rem;color:var(--text-muted);margin-top:4px;">
+        Use code <strong style="color:var(--gold);">LLAMAHUNTER</strong> in the Fortnite Shop too!
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- SHOWS -->
+<section id="shows" style="max-width:1400px; margin:0 auto;">
+  <div class="shows-header">
+    <div class="section-label">Llama Hunter Studios</div>
+    <h2 class="section-title" style="background:linear-gradient(135deg,var(--text) 0%,var(--text-muted) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">The <span style="background:linear-gradient(135deg,var(--gold),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Llama-Verse</span> of Content</h2>
+  </div>
+
+  <div class="lv-grid">
+
+    <!-- FEATURED: Open House Party -->
+    <a class="lv-card lv-featured" href="https://www.youtube.com/@RealLlamaHunter/streams" target="_blank">
+      <div class="lv-card-logo"><img src="OHP_LOGO.png" alt="Open House Party"></div>
+      <div class="lv-overlay">
+        <div class="lv-badge">Featured Show</div>
+        <div class="lv-title">Open House Party</div>
+        <div class="lv-desc">Squad up and join the party — unscripted mayhem up to 5 nights a week.</div>
+        <div class="lv-watch">Watch Now ›</div>
+      </div>
+    </a>
+
+    <!-- Tile 1: LlamaLand -->
+    <a class="lv-card lv-tile" href="https://www.youtube.com/watch?v=lENDPherFUY&list=PLzVQcJKDtwr_sHvjNGE3RPk-0tMX2krbl" target="_blank">
+      <div class="lv-card-logo"><img src="LLAMALAND_LOGO.png" alt="LlamaLand"></div>
+      <div class="lv-overlay">
+        <div class="lv-badge">Fortnite Shorts</div>
+        <div class="lv-title">LlamaLand</div>
+        <div class="lv-desc">Hollywood scenes reimagined entirely inside Fortnite.</div>
+        <div class="lv-watch">Watch Now ›</div>
+      </div>
+    </a>
+
+    <!-- Tile 2: 90 Second VR -->
+    <a class="lv-card lv-tile" href="https://www.youtube.com/watch?v=v9fT34D2rvM&list=PLzVQcJKDtwr_U584_4jHhhbcFHDc_uu9g" target="_blank">
+      <div class="lv-card-logo"><img src="90secondVR_LOGO.png" alt="90 Second VR"></div>
+      <div class="lv-overlay">
+        <div class="lv-badge">Speed Format</div>
+        <div class="lv-title">90 Second VR</div>
+        <div class="lv-desc">A full Fortnite Victory Royale — condensed to 90 seconds flat.</div>
+        <div class="lv-watch">Watch Now ›</div>
+      </div>
+    </a>
+
+    <!-- Tile 3: Just The Tips -->
+    <a class="lv-card lv-tile" href="https://www.youtube.com/watch?v=YYfNyVujWFM&list=PLzVQcJKDtwr8LtSr0rcdka2CmsMnWTZtt" target="_blank">
+      <div class="lv-card-logo"><img src="Just_The_Tips_LOGO.png" alt="Just The Tips"></div>
+      <div class="lv-overlay">
+        <div class="lv-badge">Tips & Guides</div>
+        <div class="lv-title">Just The Tips</div>
+        <div class="lv-desc">Fortnite tips delivered in around a minute. No fluff.</div>
+        <div class="lv-watch">Watch Now ›</div>
+      </div>
+    </a>
+
+    <!-- Tile 4: Censored -->
+    <a class="lv-card lv-tile" href="https://www.youtube.com/watch?v=YC-cKNpLfvE&list=PLzVQcJKDtwr_9IXgtW7hdUmG5a6_HaAor" target="_blank">
+      <div class="lv-card-logo"><img src="Censored_LOGO.png" alt="Fortnite Unnecessarily Censored"></div>
+      <div class="lv-overlay">
+        <div class="lv-badge">Comedy</div>
+        <div class="lv-title">Unnecessarily Censored</div>
+        <div class="lv-desc">Fortnite clips — unnecessarily censored for maximum comedy.</div>
+        <div class="lv-watch">Watch Now ›</div>
+      </div>
+    </a>
+
+    <!-- Tile 5: Pop Up Video -->
+    <a class="lv-card lv-tile" href="https://www.youtube.com/watch?v=mmLYyOZGZFA&list=PLzVQcJKDtwr9qvwCLZYRCnZsWe8zyjuho" target="_blank">
+      <div class="lv-card-logo"><img src="POPUPVIDEO_LOGO.png" alt="Fortnite Pop Up Video"></div>
+      <div class="lv-overlay">
+        <div class="lv-badge">Lore & Facts</div>
+        <div class="lv-title">Pop Up Video</div>
+        <div class="lv-desc">Little-known Fortnite facts with a retro pop-up style.</div>
+        <div class="lv-watch">Watch Now ›</div>
+      </div>
+    </a>
+
+    <!-- Tile 6: Fort Who? -->
+    <a class="lv-card lv-tile" href="https://www.youtube.com/watch?v=wkCjngvRFbU&list=PLzVQcJKDtwr_pJOAauAVcl9SRSqw4S-q-" target="_blank">
+      <div class="lv-card-logo"><img src="fort_who_logo.png" alt="Fort Who?"></div>
+      <div class="lv-overlay">
+        <div class="lv-badge">Guessing Game</div>
+        <div class="lv-title">Fort Who?</div>
+        <div class="lv-desc">Guess the Fortnite character from cryptic clues.</div>
+        <div class="lv-watch">Watch Now ›</div>
+      </div>
+    </a>
+
+    <!-- Tile 7: Top 3 -->
+    <a class="lv-card lv-tile" href="https://www.youtube.com/watch?v=Qk2luq3TiPo&list=PLzVQcJKDtwr-9gcMAH0crigLtkhDAtYoP" target="_blank">
+      <div class="lv-card-logo"><img src="Top3_LOGO.png" alt="LLama Hunter Top 3"></div>
+      <div class="lv-overlay">
+        <div class="lv-badge">Rankings</div>
+        <div class="lv-title">Top 3</div>
+        <div class="lv-desc">LLama's top 3 picks of random Fortnite stuff — ranked, always opinionated.</div>
+        <div class="lv-watch">Watch Now ›</div>
+      </div>
+    </a>
+
+    <!-- Tile 8: Wavelength -->
+    <a class="lv-card lv-tile" href="https://www.youtube.com/watch?v=tq_MUG8cJZU&list=PLzVQcJKDtwr9WeIScuwWntRFjJtBaAZMX" target="_blank">
+      <div class="lv-card-logo"><img src="Wavelength_LOGO.png" alt="Fortnite Wavelength"></div>
+      <div class="lv-overlay">
+        <div class="lv-badge">Guessing Game</div>
+        <div class="lv-title">Wavelength</div>
+        <div class="lv-desc">Guess the number from Fortnite clues. Deceptively tricky.</div>
+        <div class="lv-watch">Watch Now ›</div>
+      </div>
+    </a>
+
+    <!-- Tile 9: Dumb Ways To Die -->
+    <a class="lv-card lv-tile" href="https://www.youtube.com/watch?v=w_20-_EOHnQ&list=PLzVQcJKDtwr_GoKoOiCngpmrERQcwRSno" target="_blank">
+      <div class="lv-card-logo"><img src="DWTD_LOGO.png" alt="Dumb Ways To Die"></div>
+      <div class="lv-overlay">
+        <div class="lv-badge">Compilation</div>
+        <div class="lv-title">Dumb Ways To Die</div>
+        <div class="lv-desc">So many dumb ways to go out in Fortnite. Compilation gold.</div>
+        <div class="lv-watch">Watch Now ›</div>
+      </div>
+    </a>
+
+    <!-- Tile 10: GeoGuessr -->
+    <a class="lv-card lv-tile" href="https://www.youtube.com/watch?v=3H7IhYJ3wMs&list=PLzVQcJKDtwr_PJoT34DGjyIGe-Cr4Ho1_" target="_blank">
+      <div class="lv-card-logo"><img src="Geoguessr_LOGO.png" alt="Fortnite GeoGuessr"></div>
+      <div class="lv-overlay">
+        <div class="lv-badge">Map Knowledge</div>
+        <div class="lv-title">GeoGuessr</div>
+        <div class="lv-desc">Guess Fortnite locations from in-game screenshots. Test your map knowledge.</div>
+        <div class="lv-watch">Watch Now ›</div>
+      </div>
+    </a>
+
+    <!-- Tile 11: LLOLs -->
+    <a class="lv-card lv-tile" href="https://www.youtube.com/watch?v=zMJHkHKOmvs&list=PLzVQcJKDtwr8dLv2AxldyjkkDp6w6i8Ls" target="_blank">
+      <div class="lv-card-logo"><img src="LLOLS_Logo.png" alt="LLOLs Fortnite Memes"></div>
+      <div class="lv-overlay">
+        <div class="lv-badge">Memes</div>
+        <div class="lv-title">LLOLs</div>
+        <div class="lv-desc">The community's favourite meme content, curated and delivered by LLama.</div>
+        <div class="lv-watch">Watch Now ›</div>
+      </div>
+    </a>
+
+    <!-- Tile 12: FORTography -->
+    <div class="lv-card lv-tile" style="cursor:default;">
+      <div class="lv-card-logo"><img src="Fortogrpahy_LOGO.png" alt="FORTography"></div>
+      <div class="lv-overlay">
+        <div class="lv-badge">Photography</div>
+        <div class="lv-title">FORTography</div>
+        <div class="lv-desc">Artistic Fortnite screenshots — the game as you've never seen it.</div>
+      </div>
+    </div>
+
+    <!-- Tile 13: LLama Hunter Editz -->
+    <a class="lv-card lv-tile" href="https://www.youtube.com/watch?v=-mha9vLFl8U&list=PLzVQcJKDtwr_L68a8VhHy_rddyHa09Eao" target="_blank">
+      <div class="lv-card-logo"><img src="Editz_LOGO.png" alt="LLama Hunter Editz"></div>
+      <div class="lv-overlay">
+        <div class="lv-badge">Edits</div>
+        <div class="lv-title">LLama Hunter Editz</div>
+        <div class="lv-desc">Edits by LLama Hunter!</div>
+        <div class="lv-watch">Watch Now ›</div>
+      </div>
+    </a>
+
+    <!-- Tile 14: Hot Takes -->
+    <a class="lv-card lv-tile" href="https://www.youtube.com/watch?v=Sv0nlcoQa_A&list=PLzVQcJKDtwr-mr0F5cPQi-7RbggeatkXf" target="_blank">
+      <div class="lv-card-logo"><img src="Hot_Takes_LLOGO.png" alt="Hot Takes"></div>
+      <div class="lv-overlay">
+        <div class="lv-badge">Opinions</div>
+        <div class="lv-title">Hot Takes</div>
+        <div class="lv-desc">LLama Hunter defends YOUR hot takes!</div>
+        <div class="lv-watch">Watch Now ›</div>
+      </div>
+    </a>
+
+    <!-- Tile 15: Connect 5 -->
+    <div class="lv-card lv-tile" style="cursor:default;">
+      <div class="lv-card-logo"><img src="Connect5_LOGO.png" alt="Connect 5"></div>
+      <div class="lv-overlay">
+        <div class="lv-badge">Game Show</div>
+        <div class="lv-title">Connect 5</div>
+        <div class="lv-desc">You have 3 lives to connect 5 things to something Fortnite!</div>
+      </div>
+    </div>
+
+    <!-- Tile 16: Beat Blender Battle -->
+    <div class="lv-card lv-tile" style="cursor:default;">
+      <div class="lv-card-logo"><img src="Beat_Blender_Battle_LOGO.png" alt="Beat Blender Battle"></div>
+      <div class="lv-overlay">
+        <div class="lv-badge">Music Game</div>
+        <div class="lv-title">Beat Blender Battle</div>
+        <div class="lv-desc">Does this Icon Emote sound better sped up, slowed down or normal?</div>
+      </div>
+    </div>
+
+    <!-- Tile 17: In Real LLife (Wavelength) -->
+    <a class="lv-card lv-tile" href="https://www.youtube.com/watch?v=gqFVPvMSjxQ&list=PLzVQcJKDtwr9gy4lViq-TxMLKjrhmWe3g" target="_blank">
+      <div class="lv-card-logo"><img src="IRL_LOGO.png" alt="In Real LLife"></div>
+      <div class="lv-overlay">
+        <div class="lv-badge">IRL</div>
+        <div class="lv-title">In Real LLife</div>
+        <div class="lv-desc">Daily vlogs following LLama Hunter — turns "random gaming kid" into "dude I actually know."</div>
+        <div class="lv-watch">Watch Now ›</div>
+      </div>
+    </a>
+
+    <!-- Tile 18: Freeze Frame -->
+    <a class="lv-card lv-tile" href="https://www.youtube.com/playlist?list=PLJNUfYxnAPu4" target="_blank">
+      <div class="lv-card-logo"><img src="FREEZEFRAME.png" alt="Freeze Frame"></div>
+      <div class="lv-overlay">
+        <div class="lv-badge">a Llama Hunter Series</div>
+        <div class="lv-title">Freeze Frame</div>
+        <div class="lv-desc">Freezing the biggest Fortnite moments in time.</div>
+        <div class="lv-watch">Watch Now ›</div>
+      </div>
+    </a>
+
+    <!-- Coming Soon tile (one box thinner) -->
+    <div class="lv-coming-soon" style="aspect-ratio: unset; min-height: 180px;">
+      <div class="lv-coming-label">👀 Coming Soon</div>
+      <div class="lv-coming-title">New Show</div>
+      <div class="show-desc" style="font-size:0.8rem;text-align:center;max-width:280px;">Something exciting is in the works. Stay tuned to the Llama-verse.</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- YOUTUBE FEED -->
+<section class="yt-experiences-section fade-in-up">
+  <div class="yt-exp-inner">
+    <div class="yt-exp-header">
+      <div class="section-label">LLama Hunter Studios</div>
+      <h2 class="section-title">LLatest <span style="background:linear-gradient(135deg,var(--gold),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Uploads</span></h2>
+      <p style="color:var(--text-muted);font-size:0.95rem;max-width:520px;">Fresh drops straight from the channel — updated automatically every time the page loads.</p>
+    </div>
+
+    <div style="position:relative;margin-top:32px;">
+      <!-- fade edges -->
+      <div style="position:absolute;left:0;top:0;bottom:16px;width:70px;background:linear-gradient(to right,var(--bg),transparent);pointer-events:none;z-index:2;"></div>
+      <div style="position:absolute;right:0;top:0;bottom:16px;width:70px;background:linear-gradient(to left,var(--bg),transparent);pointer-events:none;z-index:2;"></div>
+      <!-- arrow buttons -->
+      <button id="yt-arrow-left" onclick="ytScroll(-1)" aria-label="Previous" style="position:absolute;left:8px;top:50%;transform:translateY(-60%);z-index:3;width:38px;height:38px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s,color 0.2s;" onmouseenter="this.style.background='var(--surface2)';this.style.color='var(--gold)'" onmouseleave="this.style.background='var(--surface)';this.style.color='var(--text)'">&#8592;</button>
+      <button id="yt-arrow-right" onclick="ytScroll(1)" aria-label="Next" style="position:absolute;right:8px;top:50%;transform:translateY(-60%);z-index:3;width:38px;height:38px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s,color 0.2s;" onmouseenter="this.style.background='var(--surface2)';this.style.color='var(--gold)'" onmouseleave="this.style.background='var(--surface)';this.style.color='var(--text)'">&#8594;</button>
+      <!-- scroll track -->
+      <div id="yt-feed-grid" style="display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 48px 16px;scrollbar-width:none;-ms-overflow-style:none;">
+        <div id="yt-loading" style="min-width:100%;text-align:center;padding:40px;color:var(--text-muted);font-family:'Barlow Condensed',sans-serif;letter-spacing:2px;font-size:0.85rem;">LOADING LATEST VIDEOS...</div>
+      </div>
+    </div>
+    <style>
+      #yt-feed-grid::-webkit-scrollbar { display:none; }
+    </style>
+    <script>
+    var _ytGrid = document.getElementById('yt-feed-grid');
+    var _ytPaused = false;
+    var _ytDir = 1;
+    var _ytSpeed = 0.5;
+
+    function ytScroll(dir) {
+      _ytPaused = true;
+      _ytGrid.scrollBy({ left: dir * (_ytGrid.clientWidth * 0.75), behavior: 'smooth' });
+      setTimeout(function(){ _ytPaused = false; }, 1500);
+    }
+
+    function _ytAutoStep() {
+      if (!_ytPaused) {
+        _ytGrid.scrollLeft += _ytSpeed * _ytDir;
+        var max = _ytGrid.scrollWidth - _ytGrid.clientWidth;
+        if (_ytGrid.scrollLeft >= max) _ytDir = -1;
+        if (_ytGrid.scrollLeft <= 0)   _ytDir =  1;
+      }
+      requestAnimationFrame(_ytAutoStep);
+    }
+
+    // pause on hover
+    _ytGrid.addEventListener('mouseenter', function(){ _ytPaused = true; });
+    _ytGrid.addEventListener('mouseleave', function(){ _ytPaused = false; });
+    _ytGrid.addEventListener('touchstart', function(){ _ytPaused = true; }, {passive:true});
+    _ytGrid.addEventListener('touchend',   function(){ setTimeout(function(){ _ytPaused=false; },2000); });
+
+    // start after a short delay so videos are loaded
+    setTimeout(_ytAutoStep, 800);
+    </script>
+
+    <div style="text-align:center;margin-top:40px;">
+      <a href="https://www.youtube.com/@RealLlamaHunter" target="_blank" class="btn-secondary">View All on YouTube →</a>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  //  PASTE YOUR NEW API KEY BELOW
+  var YT_API_KEY     = 'AIzaSyAeVy1ZRqvhvsq8Ig_ImpJn1ZSw01f0emM';
+  //  YOUR CHANNEL ID (starts with UC...)
+  var YT_CHANNEL_ID  = 'UC6HLLn4CMOzU5Y-8COvwZyg';
+  //  HOW MANY VIDEOS TO SHOW
+  var YT_MAX_RESULTS = 6;
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  var CACHE_KEY  = 'lh_yt_cache';
+  var CACHE_MINS = 60; // re-fetch after 60 minutes
+
+  function timeAgo(dateStr) {
+    var diff = (Date.now() - new Date(dateStr)) / 1000;
+    if (diff < 3600)   return Math.floor(diff/60)   + ' minutes ago';
+    if (diff < 86400)  return Math.floor(diff/3600)  + ' hours ago';
+    if (diff < 604800) return Math.floor(diff/86400) + ' days ago';
+    if (diff < 2592000)return Math.floor(diff/604800)+ ' weeks ago';
+    return Math.floor(diff/2592000) + ' months ago';
+  }
+
+  function renderVideos(videos) {
+    var grid = document.getElementById('yt-feed-grid');
+    grid.innerHTML = '';
+    videos.forEach(function(v) {
+      var id    = v.id.videoId;
+      var title = v.snippet.title;
+      var thumb = v.snippet.thumbnails.high.url;
+      var date  = v.snippet.publishedAt;
+      var card  = document.createElement('a');
+      card.href   = 'https://www.youtube.com/watch?v=' + id;
+      card.target = '_blank';
+      card.rel    = 'noopener';
+      card.style.cssText = 'display:block;text-decoration:none;background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:transform 0.2s,border-color 0.2s;cursor:pointer;flex:0 0 calc(25% - 12px);min-width:220px;scroll-snap-align:start;';
+      card.addEventListener('mouseenter', function(){ this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(200,80,240,0.4)'; });
+      card.addEventListener('mouseleave', function(){ this.style.transform=''; this.style.borderColor=''; });
+      card.innerHTML =
+        '<div style="position:relative;aspect-ratio:16/9;overflow:hidden;">' +
+          '<img src="' + thumb + '" alt="' + title.replace(/"/g,'&quot;') + '" style="width:100%;height:100%;object-fit:cover;display:block;">' +
+          '<div style="position:absolute;inset:0;background:rgba(7,5,15,0.0);transition:background 0.2s;display:flex;align-items:center;justify-content:center;">' +
+            '<svg width="48" height="48" viewBox="0 0 48 48" style="opacity:0;transition:opacity 0.2s;" class="yt-play-icon"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.6)"/><polygon points="19,14 37,24 19,34" fill="white"/></svg>' +
+          '</div>' +
+        '</div>' +
+        '<div style="padding:14px 16px;">' +
+          '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:1rem;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">' + title + '</div>' +
+          '<div style="font-size:0.72rem;color:var(--text-muted);letter-spacing:1px;font-family:\'Barlow Condensed\',sans-serif;">' + timeAgo(date) + '</div>' +
+        '</div>';
+      card.addEventListener('mouseenter', function(){
+        this.querySelector('.yt-play-icon').style.opacity = '1';
+        this.querySelector('div[style*="rgba(7,5,15"]').style.background = 'rgba(7,5,15,0.3)';
+      });
+      card.addEventListener('mouseleave', function(){
+        this.querySelector('.yt-play-icon').style.opacity = '0';
+        this.querySelector('div[style*="rgba(7,5,15"]').style.background = 'rgba(7,5,15,0.0)';
+      });
+      grid.appendChild(card);
+    });
+  }
+
+  function showError() {
+    document.getElementById('yt-loading').innerHTML =
+      '<a href="https://www.youtube.com/@RealLlamaHunter" target="_blank" style="color:var(--gold);font-family:\'Barlow Condensed\',sans-serif;letter-spacing:2px;">VIEW CHANNEL ON YOUTUBE →</a>';
+  }
+
+  function fetchVideos() {
+    var url = 'https://www.googleapis.com/youtube/v3/search'
+      + '?part=snippet'
+      + '&channelId=' + YT_CHANNEL_ID
+      + '&order=date'
+      + '&type=video'
+      + '&maxResults=' + YT_MAX_RESULTS
+      + '&key=' + YT_API_KEY;
+
+    fetch(url)
+      .then(function(r){ return r.json(); })
+      .then(function(data) {
+        if (!data.items || !data.items.length) { showError(); return; }
+        // cache it
+        try {
+          localStorage.setItem(CACHE_KEY, JSON.stringify({
+            ts: Date.now(),
+            items: data.items
+          }));
+        } catch(e) {}
+        renderVideos(data.items);
+      })
+      .catch(showError);
+  }
+
+  // check cache first
+  try {
+    var cached = JSON.parse(localStorage.getItem(CACHE_KEY));
+    if (cached && (Date.now() - cached.ts) < CACHE_MINS * 60 * 1000) {
+      renderVideos(cached.items);
+      return;
+    }
+  } catch(e) {}
+
+  fetchVideos();
+
+  // scroll handled by ytScroll() and auto-scroll
+})();
+</script>
+
+
+
+
+<div class="divider"></div>
+
+<!-- BRAND -->
+<section class="brand-section" id="brand">
+  <div class="brand-inner">
+    <div class="brand-header">
+      <div class="section-label">Signature Style</div>
+      <h2 class="section-title">Built With <span>Intention</span></h2>
+    </div>
+
+    <div class="bento-grid">
+
+      <!-- ── TILE 1: Stinger — full width banner ── -->
+      <div class="bento-tile bento-stinger">
+        <video src="Website_Stinger.mp4" autoplay loop muted playsinline></video>
+        <div class="bento-tile-overlay"></div>
+        <div class="bento-tile-content">
+          <div class="bento-tile-label">Signature Brand Element</div>
+          <div class="bento-tile-title">Custom End-Card Stinger</div>
+          <div class="bento-tile-desc">That iconic audio + visual hit ends every short. Many tried to copy it. Almost nobody stuck with it. It's not about one viral vid — it's about burning the brand into your memory.</div>
+        </div>
+      </div>
+
+      <!-- ── TILE 2: Mascot montage — tall left ── -->
+      <div class="bento-tile bento-mascot">
+        <video src="Website_Hype.mp4" autoplay loop muted playsinline></video>
+        <div class="bento-tile-overlay"></div>
+        <div class="bento-tile-content">
+          <div class="bento-tile-label">Content First</div>
+          <div class="bento-tile-title">IRL Mascot</div>
+          <div class="bento-tile-desc">Shows up at FNCS majors, random street challenges, streams. You see the llama, you know exactly who it is.</div>
+        </div>
+      </div>
+
+      <!-- ── TILE 3: IRL moments — right ── -->
+      <div class="bento-tile bento-irl">
+        <video src="IRL_Website_Video.mp4" autoplay loop muted playsinline></video>
+        <div class="bento-tile-overlay"></div>
+        <div class="bento-tile-content">
+          <div class="bento-tile-label">Beyond The Screen</div>
+          <div class="bento-tile-title">In Real LLife</div>
+          <div class="bento-tile-desc">Daily vlogs following LLama Hunter around during his day. Turns "random gaming kid" into "dude I actually know." Pure personality injection.</div>
+        </div>
+      </div>
+
+      <!-- ── ACCENT TILE 1: No Team No Editor ── -->
+      <div class="bento-tile bento-accent bento-accent-1">
+        <div>
+          <div class="bento-accent-icon">⚡</div>
+          <div class="bento-accent-title">No Team. No Editor.</div>
+          <div class="bento-accent-desc">Wild idea → chaotic recording → signature edits → posted same day. Every day. The consistency isn't marketing. It's identity.</div>
+        </div>
+        <div class="bento-accent-stat" style="font-size:2rem;">🧍</div>
+      </div>
+
+      <!-- ── ACCENT TILE 2: Self Taught ── -->
+      <div class="bento-tile bento-accent bento-accent-2">
+        <div>
+          <div class="bento-accent-icon">🧠</div>
+          <div class="bento-accent-title">Fully Self-Taught</div>
+          <div class="bento-accent-desc">Zero formal training. Everything — filming, editing, brand-building — built from scratch, starting at age eight.</div>
+        </div>
+        <div class="bento-accent-stat" style="font-size:2rem;">🎓</div>
+      </div>
+
+      <!-- ── ACCENT TILE 3: Transparent Workflow ── -->
+      <div class="bento-tile bento-accent bento-accent-3">
+        <div>
+          <div class="bento-accent-icon">🎙️</div>
+          <div class="bento-accent-title">Transparent Workflow</div>
+          <div class="bento-accent-desc">Inside Discord, he streams the full editing process — real decisions, rough cuts, experiments that might fail. Fans aren't just watching. They're in it.</div>
+        </div>
+        <div class="bento-accent-stat" style="font-size:2rem;">📡</div>
+      </div>
+
+      <!-- ── ACCENT TILE 4: OG SAC ── -->
+      <div class="bento-tile bento-accent bento-accent-4" style="cursor:pointer;" onclick="window.open('https://www.fortnite.com/@LlamaHunter','_blank')">
+        <div>
+          <div class="bento-accent-icon">🎮</div>
+          <div class="bento-accent-title">OG Epic Partner</div>
+          <div class="bento-accent-desc">Code LLAMAHUNTER active since Feb 2019 — placing him among the first creators to ever join the SAC program.</div>
+        </div>
+        <div class="bento-accent-stat" style="font-size:2rem;">🤝</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- VITALS -->
+<section class="vitals">
+  <div class="vitals-inner">
+
+    <!-- LEFT: Off-Screen stat cards -->
+    <div>
+      <div class="section-label">Off-Screen</div>
+      <h2 class="section-title">Beyond the <span>Screen</span></h2>
+      <p>Profoundly balanced. Too focused on goals to chase drama — operates with integrity, lifts others up, and is as consistent in real life as he is in content.</p>
+
+      <div class="vitals-cards">
+        <div class="vitals-card">
+          <div class="vitals-card-icon">🏆</div>
+          <div class="vitals-card-title">Honour Roll</div>
+          <div class="vitals-card-desc">Principal's list every year — never dropped below 90% average.</div>
+          <div class="vitals-card-stat">90%+</div>
+        </div>
+        <div class="vitals-card">
+          <div class="vitals-card-icon">🎙️</div>
+          <div class="vitals-card-title">Student Leader</div>
+          <div class="vitals-card-desc">Former student council president and senate co-chair.</div>
+          <div class="vitals-card-stat">President</div>
+        </div>
+        <div class="vitals-card">
+          <div class="vitals-card-icon">⚾</div>
+          <div class="vitals-card-title">Paid Umpire</div>
+          <div class="vitals-card-desc">Competitive baseball player and certified umpire for 4+ years.</div>
+          <div class="vitals-card-stat">4+ Yrs</div>
+        </div>
+        <div class="vitals-card">
+          <div class="vitals-card-icon">🏋️</div>
+          <div class="vitals-card-title">5AM Grinder</div>
+          <div class="vitals-card-desc">Gym before school. Every day. The discipline isn't just in the content.</div>
+          <div class="vitals-card-stat">Daily</div>
+        </div>
+        <div class="vitals-card">
+          <div class="vitals-card-icon">🎗️</div>
+          <div class="vitals-card-title">Ride to Conquer Cancer</div>
+          <div class="vitals-card-desc">Annual participant. Giving back is part of the brand, not a PR move.</div>
+          <div class="vitals-card-stat">Annual</div>
+        </div>
+        <div class="vitals-card">
+          <div class="vitals-card-icon">🎬</div>
+          <div class="vitals-card-title">Self-Taught Editor</div>
+          <div class="vitals-card-desc">Zero formal training. Built every skill from scratch before age 16.</div>
+          <div class="vitals-card-stat">Age 16</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Creator Code + Mission Statement -->
+    <div class="creator-code-side">
+
+      <!-- Creator Code block -->
+      <div class="creator-code-block">
+        <div class="creator-code-label">In the Fortnite Item Shop</div>
+        <div class="creator-code-text">LLAMAHUNTER</div>
+        <p class="creator-code-sub">Every use supports the llocker — one of the most stacked collections in the game. Updated daily at <a href="https://cutt.ly/LLOCKER" target="_blank" style="color:var(--cyan);text-decoration:none;">cutt.ly/LLOCKER</a></p>
+        <button class="copy-code-btn" onclick="navigator.clipboard.writeText('LLAMAHUNTER').then(function(){ var b=this; b.textContent='✓ Copied!'; setTimeout(function(){ b.textContent='Copy Code'; },2000); }.bind(this))">
+          📋 Copy Code
+        </button>
+      </div>
+
+      <!-- Mission Statement image -->
+      <div class="mission-block">
+        <img src="Mission_Statement_Website.png" alt="LLama Hunter Vision Mission Statement">
+        <div class="mission-caption">Vision &amp; Mission — Written by LLama Hunter</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- SPONSORS -->
+<section id="sponsors" class="sponsors">
+  <div class="sponsors-header">
+    <div class="section-label">Backed By</div>
+    <h2 class="section-title">Our <span>Sponsors</span></h2>
+    <p>The brands and orgs powering the Llama-verse. Interested in partnering? <a href="#connect" style="color:var(--cyan);text-decoration:none;">Let's talk.</a></p>
+  </div>
+
+  <div class="sponsors-grid">
+
+    <!-- Epic Games -->
+    <div class="sponsor-card is-clickable" data-url="https://www.fortnite.com/@llamahunter" data-bubble="Click me for more info!">
+      <div class="sponsor-logo-frame"><img src="Epic_Games_Logo_Website.png" alt="Epic Games"></div>
+      <div class="sponsor-name">Epic Games</div>
+      <div class="sponsor-tag">Creator Partner</div>
+      <p class="sponsor-desc">An OG Support-A-Creator partner since February 2019. Please consider using code <strong>LLAMAHUNTER</strong>.</p>
+      <span class="sponsor-link">Visit Site →</span>
+    </div>
+
+    <!-- Fanatics -->
+    <div class="sponsor-card is-clickable" data-url="https://fanatics.93n6tx.net/y21L72" data-bubble="Click me to shop now!">
+      <div class="sponsor-logo-frame"><img src="Fanatics_Logo_Website.png" alt="Fanatics"></div>
+      <div class="sponsor-name">Fanatics</div>
+      <div class="sponsor-tag">Officially Licensed Everything</div>
+      <p class="sponsor-desc">Fanatics.com is the ultimate sports apparel and Fan Gear Store, featuring Jerseys, T-shirts, Hats, Collectibles and merchandise for fans!</p>
+      <span class="sponsor-link">Shop Now →</span>
+    </div>
+
+    <!-- King Ice -->
+    <div class="sponsor-card is-clickable" data-url="https://www.kingice.com/r?id=t6lvtj" data-bubble="Click me to shop now!">
+      <div class="sponsor-logo-frame"><img src="King_Ice_Logo_Website.png" alt="King Ice"></div>
+      <div class="sponsor-name">King Ice</div>
+      <div class="sponsor-tag">Official Jewelry Partner</div>
+      <p class="sponsor-desc">Elevate your style with King Ice's premium chains, featuring iconic Miami Cuban, Tennis, Rope, and more in classic and iced styles for bold statements and more! Shop from over a dozen collabs from Fortnite to 7-Eleven.</p>
+      <span class="sponsor-link">Shop Now →</span>
+    </div>
+
+    <!-- Fort Who -->
+    <div class="sponsor-card is-clickable" data-url="https://www.fortnite.com/@spankysully/5794-2200-8636" data-bubble="Click me for more info!">
+      <div class="sponsor-logo-frame"><img src="fort_who_logo.png" alt="Fort Who?"></div>
+      <div class="sponsor-name">Fort Who?</div>
+      <div class="sponsor-tag">The Best Guessing Game in Fortnite</div>
+      <p class="sponsor-desc">Dive into the ultimate guessing game with Fort Who! Test your skills and have fun with friends as you guess who the characters are! Play Fort Who in Fortnite NOW!
+        <span class="sponsor-code" title="Click to copy map code" onclick="event.stopPropagation(); copySponsorCode(this,'5794-2200-8636')">5794-2200-8636 <span class="copy-icon">📋</span></span>
+      </p>
+      <span class="sponsor-link">Visit Site →</span>
+    </div>
+
+  </div>
+
+  <a class="void-feature" href="https://voidesports.net" target="_blank" rel="noopener" aria-label="Visit Void Esports">
+    <div class="void-feature-logo"><img src="Void_Logo_Website.png" alt="Void Esports"></div>
+    <div class="void-feature-body">
+      <div class="sponsor-tag">Official Content Creator</div>
+      <div class="sponsor-name">Void Esports</div>
+      <p class="sponsor-desc">Llama Hunter creates content for Void Esports, a professional esports organization competing across Fortnite, Rocket League, Rainbow Six and Apex Legends. Void has been a 14x FNCS Grand Finalist, with over $60,000 in player winnings and 25M+ views generated.</p>
+      <span class="sponsor-link">Visit voidesports.net →</span>
+    </div>
+  </a>
+</section>
+
+<!-- GIVING BACK -->
+<section id="community" class="sponsors community-support">
+  <div class="sponsors-header">
+    <div class="section-label">From The Heart</div>
+    <h2 class="section-title">Giving <span>Back</span></h2>
+    <p>Not every cause is a paid partnership — some of it is just personal.</p>
+  </div>
+
+  <div class="community-grid">
+
+    <!-- Niagara Falls Falcons -->
+    <div class="sponsor-banner">
+      <div class="sponsor-banner-logo"><img src="Falcons_Logo_Website.png" alt="Niagara Falls Falcons Baseball"></div>
+      <div class="sponsor-banner-content">
+        <div class="sponsor-name">Niagara Falls Falcons</div>
+        <div class="sponsor-tag">2026 U16A Rep Squad</div>
+        <p class="sponsor-desc">Llama Hunter teamed up with the Niagara Falls Falcons to sponsor the 2026 U16A Rep squad, cheering them on all summer as they battled their way to a 9th-place finish in the province. When the season wrapped, the team surprised him with a gift he wasn't expecting, and it's officially part of the studio setup now, a reminder of one of the proudest moments of the year.</p>
+        <div class="sponsor-story-note">9th in the province · 2026 season</div>
+      </div>
+    </div>
+
+    <!-- PMCF Ride to Conquer Cancer -->
+    <div class="sponsor-banner">
+      <div class="sponsor-status-badge" style="background:rgba(255,63,164,0.12); border-color:rgba(255,63,164,0.3); color:var(--purple);">🎗️ 3 Years Strong</div>
+      <div class="sponsor-banner-logo"><img src="PMCF_Ride_Logo_Website.png" alt="PMCF Ride to Conquer Cancer"></div>
+      <div class="sponsor-banner-content">
+        <div class="sponsor-name">Ride to Conquer Cancer</div>
+        <div class="sponsor-tag">PMCF Annual Ride</div>
+        <p class="sponsor-desc">Llama Hunter has ridden in the PMCF Ride to Conquer Cancer every year since he was 13, the same year he lost his third uncle to the disease. Three years and 600km on the bike later, the mission hasn't changed — and 2027 will mark four consecutive years in the saddle, riding for everyone still fighting.</p>
+        <div class="sponsor-story-note">600km biked · 4th year coming in 2027</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONNECT -->
+<section id="connect">
+  <div class="connect">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title">Llet's Build <span>Together</span></h2>
+    <p>Open to brand collaborations, sponsorships, partnerships, and community projects. Feedback and collaborators always welcome.</p>
+    <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;">
+      <a href="https://forms.gle/UZrt4kiZKFWYjVZn7" target="_blank" class="btn-primary">Email Llama Hunter</a>
+      <a href="https://discord.gg/5fM472BjV7" target="_blank" class="btn-secondary">Join the Discord</a>
+    </div>
+
+    <div class="social-grid">
+      <a href="https://youtube.com/@RealLlamaHunter" target="_blank" class="social-link">YouTube</a>
+      <a href="https://twitch.tv/FortniteLlamaHunter" target="_blank" class="social-link">Twitch</a>
+      <a href="https://tiktok.com/@RealLlamaHunter" target="_blank" class="social-link">TikTok</a>
+      <a href="https://x.com/RealLlamaHunter" target="_blank" class="social-link">X / Twitter</a>
+      <a href="https://bsky.app/profile/RealLlamaHunter.bsky.social" target="_blank" class="social-link">Bluesky</a>
+      <a href="https://discord.gg/5fM472BjV7" target="_blank" class="social-link">Discord</a>
+      <a href="https://fortnite.com/@LlamaHunter" target="_blank" class="social-link">Epic Creator Portal</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- VOID ESPORTS FOOTER LOGO -->
+<div class="void-footer">
+  <div class="partners-label">Content Creator For</div>
+  <a href="https://voidesports.net" target="_blank" rel="noopener" aria-label="Void Esports"><img src="Void_Logo_Website.png" alt="Void Esports"></a>
+</div>
+
+<!-- PARTNERS -->
+<div class="partners">
+  <div class="partners-label">Proudly Associated With</div>
+  <div class="partners-list">
+    <a href="https://www.fortnite.com/@LlamaHunter" target="_blank" style="display:flex;align-items:center;text-decoration:none;"><div class="partner-logo"><img src="Epic_Games_Logo_Website.png" alt="Epic Games" style="height:56px;width:auto;opacity:0.5;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.5'"></div></a>
+    <a href="https://www.fortnite.com/@spankysully/5794-2200-8636" target="_blank" style="display:flex;align-items:center;text-decoration:none;"><div class="partner-logo"><img src="fort_who_logo.png" alt="Fort Who?" style="height:52px;width:auto;opacity:0.65;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.65'"></div></a>
+    <a href="https://fanatics.93n6tx.net/y21L72" target="_blank" style="display:flex;align-items:center;text-decoration:none;"><div class="partner-logo"><img src="Fanatics_Logo_Website.png" alt="Fanatics" style="height:40px;width:auto;opacity:0.5;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.5'"></div></a>
+    <a href="#connect" style="display:flex;align-items:center;text-decoration:none;"><div class="partner-logo"><img src="King_Ice_Logo_Website.png" alt="King Ice" style="height:44px;width:auto;opacity:0.5;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.5'"></div></a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand"><img src="Llama_Hunter_Website_LOGO.png" alt="Llama Hunter" style="height:52px;width:auto;filter:drop-shadow(0 0 10px rgba(123,47,255,0.6));"></div>
+  <div class="footer-copy">© 2026 Llama Hunter Studios · Niagara Falls, Canada · All rights reserved<br>
+  <span style="font-size:0.7rem;opacity:0.5;">Not affiliated with Fortnite or Epic Games. No llamas were harmed.</span></div>
+  <div class="footer-code">Code: LLAMAHUNTER</div>
+</footer>
+
+<script>
+  // ── Copy Fort Who map code ──
+  function copySponsorCode(el, code) {
+    navigator.clipboard.writeText(code).then(function(){
+      var original = el.innerHTML;
+      el.innerHTML = '✓ Copied! <span class="copy-icon">📋</span>';
+      setTimeout(function(){ el.innerHTML = original; }, 2000);
+    });
+  }
+
+  // ── Sponsor cards: click-to-visit + hover speech-bubble callouts ──
+  (function(){
+    var cards = document.querySelectorAll('.sponsor-card.is-clickable[data-url]');
+    cards.forEach(function(card){
+      card.addEventListener('click', function(){
+        var url = card.getAttribute('data-url');
+        if (url) window.open(url, '_blank');
+      });
+
+      var msg = card.getAttribute('data-bubble');
+      if (!msg) return;
+      var bubble = document.createElement('div');
+      bubble.className = 'sponsor-bubble';
+      bubble.textContent = msg;
+      card.appendChild(bubble);
+
+      card.addEventListener('mouseenter', function(){
+        bubble.classList.remove('show');
+        void bubble.offsetWidth; // restart wiggle animation each time
+        bubble.classList.add('show');
+      });
+      card.addEventListener('mouseleave', function(){
+        bubble.classList.remove('show');
+      });
+      // touch devices: brief pop on tap, then let the click through
+      card.addEventListener('touchstart', function(){
+        bubble.classList.add('show');
+        setTimeout(function(){ bubble.classList.remove('show'); }, 1500);
+      }, {passive:true});
+    });
+  })();
+</script>
+
+<script>
+(function(){
+  var els = document.querySelectorAll('section, .shows-grid, .brand-features, .timeline, .partners-list, .about-inner');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  },{threshold:0.06});
+  els.forEach(function(el){ el.classList.add('fade-in-up'); io.observe(el); });
+})();
+</script>
+<!-- ── APPLE-STYLE MOTION LAYER ── -->
+<style>
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+#ap-progress{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--gold),var(--cyan));z-index:9999;pointer-events:none}
+nav{transition:background .4s,backdrop-filter .4s,padding .4s,box-shadow .4s}
+nav.ap-scrolled{background:rgba(10,7,20,.62)!important;backdrop-filter:saturate(180%) blur(22px);-webkit-backdrop-filter:saturate(180%) blur(22px);box-shadow:0 1px 0 rgba(255,255,255,.07)}
+.ap-r{opacity:0;transform:translateY(46px) scale(.97);filter:blur(10px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1),filter .9s cubic-bezier(.16,1,.3,1);transition-delay:var(--d,0s);will-change:transform,opacity}
+.ap-r.ap-in{opacity:1;transform:none;filter:none}
+.section-title.ap-r{transform:translateY(60px);letter-spacing:-1px}
+.section-title.ap-r.ap-in{letter-spacing:inherit;transform:none}
+.merch-banner-link{transform:scale(var(--z,.92));transition:box-shadow .4s;will-change:transform}
+.merch-banner-link:hover{transform:scale(calc(var(--z,1) * 1.015))}
+.sponsor-card,.sponsor-banner{--mx:50%;--my:50%;transform-style:preserve-3d}
+.sponsor-card::after,.sponsor-banner::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(380px circle at var(--mx) var(--my),rgba(0,232,204,.16),transparent 60%)}
+.sponsor-card:hover::after,.sponsor-banner:hover::after{opacity:1}
+.hero{will-change:transform,opacity}
+.hero-bg{will-change:transform}
+@media(prefers-reduced-motion:reduce){.ap-r{opacity:1;transform:none;filter:none;transition:none}html{scroll-behavior:auto}}
+</style>
+<div id="ap-progress"></div>
+<script>
+(function(){
+  var rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var bar=document.getElementById('ap-progress'),nav=document.querySelector('nav');
+  var hero=document.querySelector('.hero'),heroBg=document.querySelector('.hero-bg'),merch=document.querySelector('.merch-banner-link');
+
+  /* scroll-reveal with stagger */
+  var sel='.section-label,.section-title,.about-text,.about-card,.sponsors-header p,.sponsor-card,.sponsor-banner,.show-card,.bento-card,.vitals-card,.social-link,.connect p,.btn-primary,.btn-secondary,.partners-label,.partner-logo';
+  var items=[].slice.call(document.querySelectorAll(sel)).filter(function(el){return !el.closest('.hero')&&!el.closest('nav')});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('ap-in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+  items.forEach(function(el){
+    var sibs=el.parentElement?[].slice.call(el.parentElement.children).filter(function(c){return c.matches(sel)}):[el];
+    el.style.setProperty('--d',(Math.max(0,sibs.indexOf(el))*0.09).toFixed(2)+'s');
+    el.classList.add('ap-r');io.observe(el);
+  });
+
+  /* scroll-linked: progress bar, nav glass, hero parallax, merch zoom */
+  var tick=false;
+  function frame(){
+    tick=false;
+    var y=window.scrollY,h=document.documentElement.scrollHeight-innerHeight;
+    bar.style.transform='scaleX('+(h>0?y/h:0)+')';
+    nav&&nav.classList.toggle('ap-scrolled',y>40);
+    if(!rm){
+      if(hero&&y<innerHeight*1.2){var p=Math.min(y/innerHeight,1);hero.style.transform='scale('+(1-p*.06)+') translateY('+(y*.12)+'px)';hero.style.opacity=1-p*.75;}
+      if(heroBg&&y<innerHeight*1.2)heroBg.style.transform='translateY('+(y*.35)+'px) scale('+(1+y*.0004)+')';
+      if(merch){var r=merch.getBoundingClientRect(),t=Math.min(Math.max((innerHeight-r.top)/(innerHeight*.75),0),1);merch.style.setProperty('--z',(.92+.08*t).toFixed(3));}
+    }
+  }
+  addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(frame)}},{passive:true});
+  addEventListener('resize',frame);frame();
+
+  /* 3D tilt + cursor spotlight on sponsor cards (desktop) */
+  if(!rm&&matchMedia('(hover:hover)').matches){
+    document.querySelectorAll('.sponsor-card,.sponsor-banner').forEach(function(c){
+      c.addEventListener('mousemove',function(e){
+        var b=c.getBoundingClientRect(),x=(e.clientX-b.left)/b.width,y=(e.clientY-b.top)/b.height;
+        c.style.setProperty('--mx',x*100+'%');c.style.setProperty('--my',y*100+'%');
+        c.style.transform='perspective(900px) rotateX('+((.5-y)*6)+'deg) rotateY('+((x-.5)*8)+'deg) translateY(-4px)';
+      });
+      c.addEventListener('mouseleave',function(){c.style.transform=''});
+    });
+  }
+})();
+</script>
+<!-- ── FX LAYER 2: aurora, particles, cursor, magnetic, shine ── -->
+<style>
+#fx-aurora{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;mix-blend-mode:screen;opacity:.5}
+#fx-aurora i{position:absolute;width:55vmax;height:55vmax;border-radius:50%;filter:blur(90px);animation:auroraDrift 26s ease-in-out infinite alternate}
+#fx-aurora i:nth-child(1){background:rgba(200,80,240,.22);top:-20%;left:-15%}
+#fx-aurora i:nth-child(2){background:rgba(0,232,204,.16);bottom:-25%;right:-15%;animation-duration:32s;animation-delay:-8s}
+#fx-aurora i:nth-child(3){background:rgba(123,47,255,.18);top:35%;left:40%;width:40vmax;height:40vmax;animation-duration:38s;animation-delay:-14s}
+@keyframes auroraDrift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(9vw,6vh) scale(1.15)}100%{transform:translate(-7vw,12vh) scale(.95)}}
+#fx-particles{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.7}
+.hero-left>*{opacity:0;animation:heroIn 1.1s cubic-bezier(.16,1,.3,1) forwards}
+.hero-left>*:nth-child(1){animation-delay:.15s}.hero-left>*:nth-child(2){animation-delay:.3s}.hero-left>*:nth-child(3){animation-delay:.48s}.hero-left>*:nth-child(4){animation-delay:.66s}.hero-left>*:nth-child(5){animation-delay:.84s}.hero-left>*:nth-child(n+6){animation-delay:1s}
+@keyframes heroIn{from{opacity:0;transform:translateY(40px);filter:blur(12px)}to{opacity:1;transform:none;filter:none}}
+.section-title span{background-size:220% 100%!important;animation:titleShimmer 6s linear infinite}
+@keyframes titleShimmer{to{background-position:-220% 0}}
+.sponsor-logo-frame img,.sponsor-banner-logo img{animation:logoFloat 5s ease-in-out infinite}
+.sponsor-card:nth-child(2n) .sponsor-logo-frame img{animation-delay:-1.8s}.sponsor-card:nth-child(3n) .sponsor-logo-frame img{animation-delay:-3.2s}
+@keyframes logoFloat{50%{transform:translateY(-6px)}}
+.merch-banner-link,.sched-frame{overflow:hidden}
+.merch-banner-link::after,.sched-frame::after{content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.22),transparent);transform:skewX(-18deg);pointer-events:none}
+.merch-banner-link{position:relative}
+.merch-banner-link:hover::after,.sched-frame:hover::after{left:130%;transition:left .9s ease}
+.btn-primary,.btn-secondary,.nav-cta,.btn-donate{will-change:transform}
+#fx-top{position:fixed;right:22px;bottom:22px;width:48px;height:48px;border-radius:50%;border:0;cursor:pointer;z-index:9998;color:#fff;font-size:1.1rem;display:grid;place-items:center;background:conic-gradient(var(--cyan) var(--p,0%),rgba(255,255,255,.12) 0);opacity:0;transform:translateY(20px) scale(.8);transition:opacity .4s,transform .4s;pointer-events:none}
+#fx-top::before{content:'';position:absolute;inset:3px;border-radius:50%;background:#0d0a1a}
+#fx-top span{position:relative}
+#fx-top.show{opacity:1;transform:none;pointer-events:auto}
+@media(prefers-reduced-motion:reduce){#fx-aurora i,.hero-left>*,.sponsor-logo-frame img,.section-title span{animation:none!important}.hero-left>*{opacity:1}#fx-particles}
+</style>
+<div id="fx-aurora"><i></i><i></i><i></i></div>
+<canvas id="fx-particles"></canvas>
+<button id="fx-top" aria-label="Back to top"><span>↑</span></button>
+<script>
+(function(){
+  var rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* particles */
+  var cv=document.getElementById('fx-particles'),cx=cv.getContext('2d'),W,H,ps=[],mx=-999,my=-999;
+  function size(){W=cv.width=innerWidth;H=cv.height=innerHeight}
+  size();addEventListener('resize',size);
+  for(var i=0;i<(innerWidth<700?24:55);i++)ps.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.8+.4,v:Math.random()*.35+.08,c:Math.random()<.5?'0,232,204':'200,80,240',a:Math.random()*.6+.2});
+  addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY});
+  function draw(){
+    cx.clearRect(0,0,W,H);
+    ps.forEach(function(p){
+      p.y-=p.v;if(p.y<-5){p.y=H+5;p.x=Math.random()*W}
+      var dx=p.x-mx,dy=p.y-my,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<110){p.x+=dx/d*1.6;p.y+=dy/d*1.6}
+      cx.beginPath();cx.arc(p.x,p.y,p.r,0,6.283);cx.fillStyle='rgba('+p.c+','+p.a+')';cx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  if(!rm)draw();
+  /* magnetic buttons */
+  if(!rm&&matchMedia('(hover:hover)').matches){
+    document.querySelectorAll('.btn-primary,.btn-secondary,.nav-cta,.btn-donate,.social-link').forEach(function(b){
+      b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)*.25)+'px,'+((e.clientY-r.top-r.height/2)*.35)+'px)'});
+      b.addEventListener('mouseleave',function(){b.style.transform=''});
+    });
+  }
+  /* back to top with progress ring */
+  var top=document.getElementById('fx-top');
+  top.onclick=function(){scrollTo({top:0,behavior:'smooth'})};
+  addEventListener('scroll',function(){
+    var h=document.documentElement.scrollHeight-innerHeight;
+    top.style.setProperty('--p',(scrollY/h*100)+'%');top.classList.toggle('show',scrollY>600);
+  },{passive:true});
+})();
+</script>
+</body>
+</html>
